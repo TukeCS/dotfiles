@@ -1,4 +1,4 @@
-# Twilight Peak Dotfiles (Gentoo + Hyprland + OpenRC)
+# Twilight Peak (my theme) Dotfiles (Gentoo + Hyprland + OpenRC)
 
 My personal dotfiles for Gentoo Linux using Hyprland, OpenRC, and the Twilight Peak theme. Managed with GNU Stow.
 
