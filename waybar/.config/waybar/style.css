@@ -1,0 +1,99 @@
+/* ~/.config/waybar/style.css  --  Twilight Peak (soft) - Floating Edition */
+
+@define-color bg      #1a1530;
+@define-color violet  #8f7bb8;
+@define-color rose    #c9a0b4;
+@define-color peach   #d8b394;
+@define-color text    #d3cae3;
+@define-color dim     #8a7fa8;
+@define-color green   #92b8a2;
+@define-color warn    #d8b394;
+@define-color crit    #c98a9c;
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "Noto Sans", sans-serif;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+/* Make the overall bar background transparent */
+window#waybar {
+    background: transparent;
+}
+
+/* Style the individual module groups into floating pills */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: alpha(@bg, 0.95);
+    border: 1px solid alpha(@violet, 0.3);
+    border-radius: 18px;
+    padding: 2px 12px;
+}
+
+#workspaces, #window, #clock,
+#power-profiles-daemon, #cpu, #temperature, #backlight,
+#pulseaudio, #bluetooth, #battery, #tray, #custom-power {
+    padding: 0 8px;
+    color: @text;
+}
+
+/* Workspace styling adapted for floating pills */
+#workspaces button {
+    padding: 0 8px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    color: @dim;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+#workspaces button:hover {
+    background: alpha(@violet, 0.25);
+    color: @text;
+}
+#workspaces button.active {
+    color: @bg;
+    background: @rose;
+}
+#workspaces button.urgent { 
+    color: @bg; 
+    background: @warn; 
+}
+
+#window { color: @dim; }
+#clock  { color: @peach; font-weight: bold; }
+
+#power-profiles-daemon.performance { color: @rose; }
+#power-profiles-daemon.balanced    { color: @text; }
+#power-profiles-daemon.power-saver { color: @green; }
+
+#pulseaudio.muted,
+#bluetooth.off,
+#bluetooth.disabled  { color: @dim; }
+#bluetooth.connected { color: @peach; }
+
+#battery.charging, #battery.plugged { color: @green; }
+#battery.warning:not(.charging)     { color: @warn; }
+#battery.critical:not(.charging)    { color: @crit; }
+#temperature.critical               { color: @crit; }
+
+/* Custom Power Button */
+#custom-power {
+    color: @crit;
+    font-size: 15px;
+    padding-right: 6px;
+    margin-left: 4px;
+    transition: all 0.2s ease;
+}
+#custom-power:hover {
+    text-shadow: 0 0 5px @crit;
+}
+
+tooltip {
+    background: alpha(@bg, 0.98);
+    border: 1px solid alpha(@violet, 0.4);
+    border-radius: 10px;
+}
+tooltip label { color: @text; }
