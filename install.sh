@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Dotfiles installer: Hyprland + Waybar + rofi + ghostty + fastfetch, black/white with moss green.
+# Dotfiles installer: Hyprland + Waybar + rofi + ghostty + fastfetch + Firefox, black/white with moss green.
 #   ./install.sh            install packages + link configs
 #   ./install.sh --no-pkgs  only link configs
 set -euo pipefail
@@ -16,6 +16,7 @@ PKGS=(
   pulsemixer bluetui networkmanager
   dolphin qt5ct qt6ct qt6-wayland breeze breeze-icons
   ttf-jetbrains-mono-nerd python ffmpeg
+  firefox
 )
 
 install_pkgs() {
@@ -52,6 +53,21 @@ link_configs() {
   link "$DOT/local/bin/screenshot" "$HOME/.local/bin/screenshot"
   link "$DOT/local/share/color-schemes/Monochrome.colors" "$HOME/.local/share/color-schemes/Monochrome.colors"
   link "$DOT/home/bashrc" "$HOME/.bashrc"
+
+  # Firefox theme: link into the profile Firefox actually uses
+  local ffdir="$HOME/.config/mozilla/firefox" ffprof=""
+  [ -d "$ffdir" ] || ffdir="$HOME/.mozilla/firefox"
+  if [ -f "$ffdir/installs.ini" ]; then
+    ffprof="$(grep -m1 '^Default=' "$ffdir/installs.ini" | cut -d= -f2-)"
+  fi
+  [ -n "$ffprof" ] || ffprof="$(cd "$ffdir" 2>/dev/null && ls -d *.default-release 2>/dev/null | head -1)"
+  if [ -n "$ffprof" ] && [ -d "$ffdir/$ffprof" ]; then
+    link "$DOT/firefox/user.js"                "$ffdir/$ffprof/user.js"
+    link "$DOT/firefox/chrome/userChrome.css"  "$ffdir/$ffprof/chrome/userChrome.css"
+    link "$DOT/firefox/chrome/userContent.css" "$ffdir/$ffprof/chrome/userContent.css"
+  else
+    warn "No Firefox profile found: start Firefox once, then rerun ./install.sh --no-pkgs"
+  fi
 
   # qt5ct/qt6ct need an absolute path, so they are generated rather than linked
   for q in qt5ct qt6ct; do

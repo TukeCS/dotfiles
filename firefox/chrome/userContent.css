@@ -1,0 +1,80 @@
+/* ---- Monochrome theme for Firefox's own pages ---- */
+
+/* blank tabs: black instead of white flash */
+@-moz-document url("about:blank") {
+  html, body { background-color: #000000 !important; }
+}
+
+/* new tab / home / settings / about:* pages */
+@-moz-document url-prefix("about:"), url-prefix("chrome:"), url-prefix("moz-extension:") {
+  :root {
+    --mono-bg: #000000;
+    --mono-bg-2: #0d0d0d;
+    --mono-bg-3: #1a1a1a;
+    --mono-border: #2e2e2e;
+    --mono-fg: #e6e6e6;
+    --mono-muted: #777777;
+    --mono-accent: #a8bf4a;
+    --mono-accent-dim: #4f5a24;
+
+    --newtab-background-color: var(--mono-bg) !important;
+    --newtab-background-color-secondary: var(--mono-bg-2) !important;
+    --newtab-text-primary-color: var(--mono-fg) !important;
+    --newtab-text-secondary-color: var(--mono-muted) !important;
+    --newtab-element-hover-color: var(--mono-bg-3) !important;
+    --newtab-element-active-color: #262626 !important;
+    --newtab-border-color: var(--mono-border) !important;
+    --newtab-primary-action-background: var(--mono-accent) !important;
+    --newtab-wordmark-color: var(--mono-fg) !important;
+    --newtab-search-icon-color: var(--mono-muted) !important;
+
+    --in-content-page-background: var(--mono-bg) !important;
+    --in-content-page-color: var(--mono-fg) !important;
+    --in-content-text-color: var(--mono-fg) !important;
+    --in-content-deemphasized-text: var(--mono-muted) !important;
+    --in-content-box-background: var(--mono-bg-2) !important;
+    --in-content-box-background-odd: var(--mono-bg-3) !important;
+    --in-content-box-border-color: var(--mono-border) !important;
+    --in-content-border-color: var(--mono-border) !important;
+    --in-content-item-hover: var(--mono-bg-3) !important;
+    --in-content-item-selected: var(--mono-accent-dim) !important;
+    --in-content-primary-button-background: var(--mono-accent) !important;
+    --in-content-primary-button-background-hover: #b9d15a !important;
+    --in-content-primary-button-text-color: #000000 !important;
+    --in-content-focus-outline-color: var(--mono-accent) !important;
+    --in-content-link-color: var(--mono-accent) !important;
+
+    --background-color-canvas: var(--mono-bg) !important;
+    --background-color-box: var(--mono-bg-2) !important;
+    --text-color: var(--mono-fg) !important;
+    --text-color-deemphasized: var(--mono-muted) !important;
+    --border-color: var(--mono-border) !important;
+    --border-color-card: var(--mono-border) !important;
+    --color-accent-primary: var(--mono-accent) !important;
+    --color-accent-primary-hover: #b9d15a !important;
+    --button-text-color-primary: #000000 !important;
+    --link-color: var(--mono-accent) !important;
+    --focus-outline-color: var(--mono-accent) !important;
+    --border-radius-small: 0 !important;
+    --border-radius-medium: 0 !important;
+    --border-radius-large: 0 !important;
+    --border-radius-xlarge: 0 !important;
+
+    accent-color: var(--mono-accent) !important;
+  }
+  html, body { background-color: var(--mono-bg) !important; color: var(--mono-fg); }
+  ::selection { background-color: var(--mono-accent-dim) !important; color: #ffffff !important; }
+}
+
+/* new tab: square tiles, monospace */
+@-moz-document url("about:newtab"), url("about:home"), url("about:privatebrowsing") {
+  body { font-family: "JetBrainsMono Nerd Font", monospace !important; }
+  .top-site-outer .tile, .top-site-outer .top-site-icon, .search-handoff-button,
+  .search-wrapper input, .card-outer, .card, .ds-card, .context-menu,
+  .customize-menu, button { border-radius: 0 !important; }
+  .search-wrapper input, .search-handoff-button {
+    background-color: var(--mono-bg-2) !important;
+    border: 1px solid var(--mono-border) !important;
+    box-shadow: none !important;
+  }
+}

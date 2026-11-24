@@ -10,6 +10,7 @@ Hyprland setup for Arch Linux. Black and white, square corners, with a moss-gree
 | Terminal | ghostty + fastfetch with a block-art logo |
 | Notifications | mako |
 | Theme | Monochrome Qt/KDE colour scheme, dark GTK |
+| Browser | Firefox `userChrome.css` / `userContent.css`: black UI, moss-green selected tab, square corners (websites untouched) |
 
 ## Install
 
@@ -22,6 +23,8 @@ cd ~/dotfiles
 
 Existing files are moved to `~/.dotfiles-backup/<date>/` before being replaced.
 The configs are symlinks into this repo, so edits you make show up in `git status`.
+
+Firefox: the theme is linked into your default profile; restart Firefox to load it.
 
 Wallpaper is not included: put any image at `~/Pictures/Wallpapers/wallpaper.jpg`.
 
