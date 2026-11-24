@@ -4,7 +4,7 @@ Hyprland setup for Arch Linux. Black and white, square corners, with a moss-gree
 
 | Part | What |
 |---|---|
-| Login screen | Ly: black TTY palette, moss-green box, big clock |
+| Login screen | Ly: your wallpaper as full-screen block art, black box with a moss-green border |
 | Window manager | Hyprland (Lua config), hyprpaper, hyprlock |
 | Bar | Waybar with fan-profile (asusctl), GPU mode (supergfxctl), power menu |
 | Launcher | rofi |
@@ -26,6 +26,8 @@ Existing files are moved to `~/.dotfiles-backup/<date>/` before being replaced.
 The configs are symlinks into this repo, so edits you make show up in `git status`.
 
 Ly: its files are copied to `/etc/ly/` with sudo (the old ones are kept as `.bak`), since Ly runs as root.
+The background is made from `~/Pictures/Wallpapers/wallpaper.jpg` by `system/ly/make-ly-art.py`: it picks 16 colours
+from the wallpaper (the most a TTY can show) and draws it with half blocks. Change the wallpaper, then rerun `./install.sh --no-pkgs`.
 To make Ly your login screen: `sudo systemctl disable getty@tty2 && sudo systemctl enable ly@tty2`.
 
 Firefox: the theme is linked into your default profile; restart Firefox to load it.

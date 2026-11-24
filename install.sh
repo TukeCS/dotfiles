@@ -79,20 +79,32 @@ link_configs() {
   chmod +x "$DOT/local/bin/screenshot" "$DOT"/config/waybar/scripts/*.sh
 }
 
-# Ly (login screen) reads /etc/ly as root, so its files are copied there instead of linked
+# Ly (login screen) reads /etc/ly as root, so its files are copied there instead of linked.
+# The background is generated from the wallpaper; rerun ./install.sh --no-pkgs after changing it.
 install_ly() {
   [ -d /etc/ly ] || { warn "ly not installed: skipping the login screen theme"; return; }
-  local f changed=0
-  for f in config.ini startup.sh; do
-    cmp -s "$DOT/system/ly/$f" "/etc/ly/$f" || changed=1
+  local tmp f changed=0 wall="$HOME/Pictures/Wallpapers/wallpaper.jpg"
+  tmp="$(mktemp -d)"
+  cp "$DOT/system/ly/config.ini" "$DOT/system/ly/startup.sh" "$tmp/"
+  if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
+    python3 "$DOT/system/ly/make-ly-art.py" "$wall" "$tmp" >/dev/null
+  else
+    warn "No wallpaper (or ffmpeg): Ly gets a plain black background"
+    sed -i 's/^animation = .*/animation = none/' "$tmp/config.ini"
+  fi
+  for f in "$tmp"/*; do
+    cmp -s "$f" "/etc/ly/${f##*/}" || changed=1
   done
-  [ "$changed" = 1 ] || return 0
-  say "Installing the Ly theme to /etc/ly (needs sudo)"
-  for f in config.ini startup.sh; do
-    [ -e "/etc/ly/$f" ] && sudo cp "/etc/ly/$f" "/etc/ly/$f.bak"
-  done
-  sudo install -m 644 "$DOT/system/ly/config.ini" /etc/ly/config.ini
-  sudo install -m 755 "$DOT/system/ly/startup.sh" /etc/ly/startup.sh
+  if [ "$changed" = 1 ]; then
+    say "Installing the Ly theme to /etc/ly (needs sudo)"
+    for f in config.ini startup.sh; do
+      [ -e "/etc/ly/$f" ] && sudo cp "/etc/ly/$f" "/etc/ly/$f.bak"
+    done
+    for f in "$tmp"/*; do
+      case "$f" in *.sh) sudo install -m 755 "$f" /etc/ly/ ;; *) sudo install -m 644 "$f" /etc/ly/ ;; esac
+    done
+  fi
+  rm -rf "$tmp"
   if ! systemctl is-enabled --quiet 'ly@tty2.service' 2>/dev/null; then
     warn "Ly is not enabled. To use it: sudo systemctl disable getty@tty2 && sudo systemctl enable ly@tty2"
   fi
