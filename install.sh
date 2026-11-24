@@ -79,18 +79,24 @@ link_configs() {
   chmod +x "$DOT/local/bin/screenshot" "$DOT"/config/waybar/scripts/*.sh
 }
 
-# Ly (login screen) reads /etc/ly as root, so its files are copied there instead of linked.
+# Ly (login screen) + hyprlock art. Ly reads /etc/ly as root, so its files are copied there instead of linked.
 # The background is generated from the wallpaper; rerun ./install.sh --no-pkgs after changing it.
 install_ly() {
-  [ -d /etc/ly ] || { warn "ly not installed: skipping the login screen theme"; return; }
   local tmp f changed=0 wall="$HOME/Pictures/Wallpapers/wallpaper.jpg"
   tmp="$(mktemp -d)"
   cp "$DOT/system/ly/config.ini" "$DOT/system/ly/startup.sh" "$tmp/"
   if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
-    python3 "$DOT/system/ly/make-ly-art.py" "$wall" "$tmp" >/dev/null
+    # same art twice: a .dur for Ly, a PNG for the hyprlock background
+    mkdir -p "$HOME/.local/share/hyprlock"
+    python3 "$DOT/system/ly/make-ly-art.py" "$wall" "$tmp" --png "$HOME/.local/share/hyprlock/blocks.png" 2560x1600 >/dev/null
+    echo "  wrote ~/.local/share/hyprlock/blocks.png"
   else
     warn "No wallpaper (or ffmpeg): Ly gets a plain black background"
     sed -i 's/^animation = .*/animation = none/' "$tmp/config.ini"
+  fi
+  if [ ! -d /etc/ly ]; then
+    warn "ly not installed: skipping the login screen theme"
+    rm -rf "$tmp"; return
   fi
   for f in "$tmp"/*; do
     cmp -s "$f" "/etc/ly/${f##*/}" || changed=1

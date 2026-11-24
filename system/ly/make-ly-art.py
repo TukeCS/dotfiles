@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Turn a wallpaper into a full-screen block-art background for Ly.
 
-    python make-ly-art.py WALLPAPER OUTDIR [COLUMNS ROWS]
+    python make-ly-art.py WALLPAPER OUTDIR [COLUMNS ROWS] [--png FILE WIDTHxHEIGHT]
 
 Writes OUTDIR/wallpaper.dur (a durdraw file Ly plays as its "animation") and
 OUTDIR/palette (16 hex colours that startup.sh loads into the console).
+With --png it also renders the same art as an image (used as the hyprlock
+background, so the lock screen matches the login screen).
 
 The Linux console only has 16 colours, so the palette is picked from the
 wallpaper itself. A few slots stay fixed because Ly's UI uses them:
@@ -104,6 +106,7 @@ def dither(pixels, w, h, pal):
 def to_cells(idx, w, rows, pal):
     """Pair pixel rows into half-block cells. Returns contents and colorMap[x][y] = [fg, bg]."""
     lines, cmap = [], [[None] * rows for _ in range(w)]
+    shown = list(idx)  # what actually ends up on screen, for the --png render
     for r in range(rows):
         line = []
         for x in range(w):
@@ -116,30 +119,49 @@ def to_cells(idx, w, rows, pal):
                 ch, fg, bg = "▄", bot, top
             else:  # both colours are foreground-only: keep the top, approximate the bottom
                 ch, fg, bg = "▀", top, nearest(pal[bot], pal, BG_SLOTS)
+                shown[(2 * r + 1) * w + x] = bg
             line.append(ch)
             cmap[x][r] = [DUR_FG[fg], DUR_FG[bg] - 1 if bg else 0]
         lines.append("".join(line))
-    return lines, cmap
+    return lines, cmap, shown
+
+
+def write_png(path, size, shown, cols, rows, pal):
+    raw = b"".join(bytes(pal[i]) for i in shown)
+    subprocess.run(
+        ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{cols}x{rows * 2}",
+         "-i", "-", "-vf", f"scale={size.replace('x', ':')}:flags=neighbor", "-frames:v", "1", path],
+        input=raw, check=True)
 
 
 def main():
-    if len(sys.argv) not in (3, 5):
+    args, png = sys.argv[1:], None
+    if "--png" in args:
+        i = args.index("--png")
+        png, args = args[i + 1:i + 3], args[:i] + args[i + 3:]
+        if len(png) != 2:
+            sys.exit(__doc__)
+    if len(args) not in (2, 4):
         sys.exit(__doc__)
-    src, outdir = sys.argv[1], sys.argv[2]
-    cols, rows = (int(sys.argv[3]), int(sys.argv[4])) if len(sys.argv) == 5 else (160, 50)
+    src, outdir = args[0], args[1]
+    cols, rows = (int(args[2]), int(args[3])) if len(args) == 4 else (160, 50)
     pixels = load_pixels(src, cols, rows * 2)
     pal = build_palette(pixels)
     idx = dither(pixels, cols, rows * 2, pal)
-    lines, cmap = to_cells(idx, cols, rows, pal)
+    lines, cmap, shown = to_cells(idx, cols, rows, pal)
     movie = {"DurMovie": {
         "formatVersion": 7, "colorFormat": "16", "preferredFont": "fixed", "encoding": "utf-8",
         "name": "wallpaper", "artist": "", "framerate": 1.0, "sizeX": cols, "sizeY": rows, "extra": None,
         "frames": [{"frameNumber": 1, "delay": 0, "contents": lines, "colorMap": cmap}]}}
-    with gzip.open(f"{outdir}/wallpaper.dur", "wt", encoding="utf-8") as f:
-        json.dump(movie, f)
+    # mtime=0 keeps the file byte-identical between runs, so install.sh only asks for sudo on real changes
+    with gzip.GzipFile(f"{outdir}/wallpaper.dur", "wb", mtime=0) as f:
+        f.write(json.dumps(movie).encode())
     with open(f"{outdir}/palette", "w") as f:
         f.write("\n".join("%02x%02x%02x" % c for c in pal) + "\n")
     print(f"wrote {outdir}/wallpaper.dur ({cols}x{rows}) and {outdir}/palette")
+    if png:
+        write_png(png[0], png[1], shown, cols, rows, pal)
+        print(f"wrote {png[0]}")
 
 
 if __name__ == "__main__":
