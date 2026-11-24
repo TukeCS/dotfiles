@@ -14,7 +14,7 @@ Hyprland setup for Arch Linux. Black and white, square corners, with a moss-gree
 ## Install
 
 ```sh
-git clone https://github.com/<you>/dotfiles ~/dotfiles
+git clone https://github.com/TukeCS/dotfiles ~/dotfiles
 cd ~/dotfiles
 ./install.sh            # installs packages, then links configs
 ./install.sh --no-pkgs  # only link configs
