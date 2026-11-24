@@ -41,6 +41,7 @@ Screenshots are saved to `~/Pictures/Screenshots/Screenshot_YYYY-MM-DD_HH-MM-SS.
 - **Fan profile**: click to cycle Quiet / Balanced / Performance (needs `asusctl`).
 - **GPU mode**: click to switch Hybrid / Integrated (needs `supergfxctl`; hidden otherwise).
 - **Coffee cup**: idle inhibitor, keeps the screen awake.
+- **Wi-Fi icon**: click for a rofi Wi-Fi menu (connect, password prompt, disconnect, forget); right-click for nmtui.
 - **Power icon**: lock, logout, suspend, reboot, shutdown.
 
 ## fastfetch logo

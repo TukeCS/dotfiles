@@ -130,14 +130,14 @@
   },
 
   "network": {
-    "format-wifi": "{icon} {essid}",
-    "format-ethernet": "󰈀 wired",
-    "format-disconnected": "󰤭 offline",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤭",
     "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ifname} {ipaddr}\n {bandwidthDownBits}   {bandwidthUpBits}",
     "tooltip-format-ethernet": "{ifname} {ipaddr}",
-    "max-length": 25,
-    "on-click": "ghostty --class=tui.float -e nmtui"
+    "on-click": "~/.config/waybar/scripts/wifi-menu.sh",
+    "on-click-right": "ghostty --class=tui.float -e nmtui"
   },
 
   "battery": {
