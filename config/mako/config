@@ -1,23 +1,30 @@
+# Matches the Ly login / hyprlock box: solid black, square, moss-green border,
+# light grey text with dim grey labels, red only for critical.
 font=JetBrainsMono Nerd Font 11
-background-color=#000000f2
+background-color=#000000ff
 text-color=#e6e6e6
 border-color=#a8bf4a
-progress-color=over #4f5a24
+progress-color=over #3b4520
 border-size=2
 border-radius=0
-padding=12
+padding=12,14
 margin=20
-width=360
+outer-margin=6
+width=380
 default-timeout=5000
 icons=1
-max-icon-size=48
+max-icon-size=40
+# app name dim like the box labels, summary bold, body below
+format=<span foreground="#666666">%a</span>\n<b>%s</b>\n%b
+
+[app-name=""]
+format=<b>%s</b>\n%b
 
 [urgency=low]
-border-color=#4f5a24
-text-color=#777777
+border-color=#666666
+text-color=#a9a9a9
 
 [urgency=critical]
-background-color=#ffffff
-text-color=#000000
-border-color=#ffffff
+border-color=#e07a5f
 default-timeout=0
+format=<span foreground="#e07a5f">%a</span>\n<b>%s</b>\n%b
