@@ -13,10 +13,10 @@ PKGS=(
   hyprland hyprpaper hyprlock xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
   waybar rofi mako libnotify ghostty fastfetch
   grim slurp wl-clipboard brightnessctl playerctl
-  pulsemixer bluetui networkmanager
+  pulsemixer bluetui networkmanager btop less
   dolphin qt5ct qt6ct qt6-wayland breeze breeze-icons
   ttf-jetbrains-mono-nerd python ffmpeg
-  firefox ly
+  firefox ly neovim
 )
 
 install_pkgs() {

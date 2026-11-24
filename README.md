@@ -11,7 +11,10 @@ Hyprland setup for Arch Linux. Black and white, square corners, with a moss-gree
 | Launcher | rofi |
 | Terminal | ghostty + fastfetch with a block-art logo |
 | Notifications | mako |
-| Theme | Monochrome Qt/KDE colour scheme, dark GTK |
+| Editor | Neovim (Rust / Zig / Python): transparent, Icelandic syntax colours, F5–F8 build/run/test/lint |
+| Monitor | btop with a matching theme (opened from the CPU/memory modules) |
+| Shell | bash prompt and man pages in the same colours |
+| Theme | Qt/KDE colour scheme (Dolphin etc.) and GTK, both with the moss accent |
 | Browser | Firefox `userChrome.css` / `userContent.css`: black UI, moss-green selected tab, square corners (websites untouched) |
 
 ## Install
@@ -30,6 +33,10 @@ Ly: its files are copied to `/etc/ly/` with sudo (the old ones are kept as `.bak
 The background is made from `~/Pictures/Wallpapers/wallpaper.jpg` by `system/ly/make-ly-art.py`: it picks 16 colours
 from the wallpaper (the most a TTY can show) and draws it with half blocks. Change the wallpaper, then rerun `./install.sh --no-pkgs`.
 To make Ly your login screen: `sudo systemctl disable getty@tty2 && sudo systemctl enable ly@tty2`.
+
+Neovim: plugins install themselves on first launch. Plugins you only want on one machine can go in
+`~/.config/nvim/lua/local_plugins.lua` (a Lua file returning a list of lazy.nvim specs); it is not part of the repo.
+LSP servers come from pacman: `rust-analyzer zls pyright ruff`.
 
 Firefox: the theme is linked into your default profile; restart Firefox to load it.
 
