@@ -1,5 +1,7 @@
-/* ---- Monochrome theme (matches Hyprland / waybar / ghostty) ----
-   bg #000  fg #e6e6e6  muted #777  border #2e2e2e  accent moss #a8bf4a / #4f5a24  square corners */
+/* ---- Theme matching Hyprland / waybar / rofi / mako / ghostty ----
+   bg #000  fg #e6e6e6  muted #777  outline #666  accent moss #a8bf4a / #3b4520  square corners.
+   Same rules as the rest of the desktop: fields have a dim outline that turns moss on focus,
+   popups get a moss border, the active tab is underlined in moss like the active workspace. */
 
 :root {
   --mono-bg: #000000;
@@ -9,7 +11,11 @@
   --mono-fg: #e6e6e6;
   --mono-muted: #777777;
   --mono-accent: #a8bf4a;
-  --mono-accent-dim: #4f5a24;
+  --mono-accent-dim: #3b4520;
+  --mono-outline: #666666;
+  --mono-red: #e06c5f;
+  --mono-amber: #e2b86b;
+  --mono-sky: #89c4e1;
 
   --lwt-accent-color: var(--mono-bg) !important;
   --lwt-inactive-accent-color: var(--mono-bg) !important;
@@ -23,7 +29,7 @@
   --toolbar-field-focus-background-color: var(--mono-bg) !important;
   --toolbar-field-color: var(--mono-fg) !important;
   --toolbar-field-focus-color: #ffffff !important;
-  --toolbar-field-border-color: var(--mono-border) !important;
+  --toolbar-field-border-color: var(--mono-outline) !important;
   --toolbar-field-focus-border-color: var(--mono-accent) !important;
   --toolbarbutton-hover-background: var(--mono-bg-3) !important;
   --toolbarbutton-active-background: #262626 !important;
@@ -42,14 +48,14 @@
   --urlbarView-separator-color: var(--mono-border) !important;
   --arrowpanel-background: var(--mono-bg) !important;
   --arrowpanel-color: var(--mono-fg) !important;
-  --arrowpanel-border-color: var(--mono-border) !important;
+  --arrowpanel-border-color: var(--mono-accent) !important;
   --arrowpanel-border-radius: 0 !important;
   --panel-separator-color: var(--mono-border) !important;
   --panel-item-hover-bgcolor: var(--mono-bg-3) !important;
   --panel-item-active-bgcolor: #262626 !important;
   --menu-background-color: var(--mono-bg) !important;
   --menu-color: var(--mono-fg) !important;
-  --menu-border-color: var(--mono-border) !important;
+  --menu-border-color: var(--mono-accent) !important;
   --menuitem-hover-background-color: var(--mono-bg-3) !important;
   --sidebar-background-color: var(--mono-bg) !important;
   --sidebar-text-color: var(--mono-fg) !important;
@@ -61,6 +67,11 @@
   --border-radius-medium: 0 !important;
   --border-radius-large: 0 !important;
   --border-radius-circle: 0 !important;
+  --toolbar-field-border-radius: 0 !important;
+  --urlbar-container-border-radius: 0 !important;
+  --urlbar-icon-border-radius: 0 !important;
+  --identity-box-border-radius: 0 !important;
+  --tab-border-radius: 0 !important;
   accent-color: var(--mono-accent) !important;
 }
 
@@ -80,7 +91,7 @@
 #navigator-toolbox { border-bottom: 1px solid var(--mono-border) !important; }
 #nav-bar { border-top: none !important; }
 
-/* tabs: square, selected tab in moss green */
+/* tabs: square, selected tab underlined in moss (like the active workspace in waybar) */
 .tab-background {
   border-radius: 0 !important;
   margin-block: 0 !important;
@@ -91,19 +102,19 @@
 .tabbrowser-tab:hover { color: var(--mono-fg) !important; }
 .tabbrowser-tab[selected] { color: #ffffff !important; }
 .tabbrowser-tab[selected] .tab-background {
-  background: var(--mono-accent-dim) !important;           /* moss green */
-  box-shadow: inset 0 -2px 0 var(--mono-accent) !important; /* bright moss underline */
+  background: var(--mono-bg-3) !important;
+  box-shadow: inset 0 -2px 0 var(--mono-accent) !important; /* moss underline */
 }
 .tabbrowser-tab[selected] .tab-close-button { color: #ffffff !important; }
-.tabbrowser-tab[attention] .tab-background,
-.tabbrowser-tab[soundplaying] .tab-audio-button { color: var(--mono-accent) !important; }
+.tabbrowser-tab[attention] .tab-background { box-shadow: inset 0 -2px 0 var(--mono-amber) !important; }
+.tabbrowser-tab[soundplaying] .tab-audio-button { color: var(--mono-sky) !important; }
 .tab-throbber[busy]::before, .tab-throbber[progress]::before { fill: var(--mono-accent) !important; }
 
 /* url bar */
 #urlbar-background, #searchbar {
   border-radius: 0 !important;
   background-color: var(--mono-bg-2) !important;
-  border: 1px solid var(--mono-border) !important;
+  border: 1px solid var(--mono-outline) !important;
   box-shadow: none !important;
 }
 #urlbar[focused] > #urlbar-background {
@@ -114,7 +125,9 @@
 #urlbar[open] > #urlbar-background { border-color: var(--mono-accent) !important; }
 .urlbarView-row[selected] > .urlbarView-row-inner,
 .urlbarView-row:hover > .urlbarView-row-inner { border-radius: 0 !important; }
-#identity-box > *, #tracking-protection-icon-container, .urlbar-page-action, #urlbar-go-button {
+#identity-box > *, #tracking-protection-icon-container, .urlbar-page-action, #urlbar-go-button,
+#urlbar, #urlbar > *, .urlbar-input-container, #urlbar-searchmode-switcher,
+#identity-icon-box, #identity-permission-box, .searchmode-switcher, #searchbar > * {
   border-radius: 0 !important;
 }
 ::selection { background-color: var(--mono-accent-dim) !important; color: #ffffff !important; }
@@ -128,7 +141,7 @@ toolbarbutton, .toolbarbutton-icon, .toolbarbutton-badge-stack, .toolbarbutton-t
 menupopup, panel, .panel-arrowcontent, panelview, .menupopup-arrowscrollbox {
   --panel-background: var(--mono-bg) !important;
   --panel-color: var(--mono-fg) !important;
-  --panel-border-color: var(--mono-border) !important;
+  --panel-border-color: var(--mono-accent) !important;
   --panel-border-radius: 0 !important;
   --panel-shadow-margin: 0px !important;
   --panel-shadow: none !important;
@@ -156,3 +169,6 @@ menupopup menuitem[_moz-menuactive], menupopup menu[_moz-menuactive] {
 
 /* find bar */
 findbar { background: var(--mono-bg) !important; color: var(--mono-fg) !important; border-top: 1px solid var(--mono-border) !important; }
+findbar .findbar-textbox { border-radius: 0 !important; border: 1px solid var(--mono-outline) !important; background: var(--mono-bg-2) !important; }
+findbar .findbar-textbox:focus { border-color: var(--mono-accent) !important; }
+findbar .findbar-textbox[status="notfound"] { border-color: var(--mono-red) !important; }

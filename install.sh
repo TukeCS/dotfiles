@@ -116,6 +116,8 @@ install_ly() {
 extras() {
   mkdir -p "$HOME/Pictures/Screenshots" "$HOME/Pictures/Wallpapers"
   command -v kwriteconfig6 >/dev/null && kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme Monochrome || true
+  # Kdenlive picks its own colour scheme (BreezeDark by default); point it at ours
+  command -v kwriteconfig6 >/dev/null && kwriteconfig6 --file kdenliverc --group UiSettings --key ColorScheme Monochrome || true
   command -v gsettings >/dev/null && gsettings set org.gnome.desktop.interface color-scheme prefer-dark || true
   if [ ! -f "$HOME/Pictures/Wallpapers/wallpaper.jpg" ]; then
     warn "No wallpaper yet: put an image at ~/Pictures/Wallpapers/wallpaper.jpg"

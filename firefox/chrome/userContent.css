@@ -1,4 +1,4 @@
-/* ---- Monochrome theme for Firefox's own pages ---- */
+/* ---- Firefox's own pages (new tab, settings, about:*) in the desktop theme ---- */
 
 /* blank tabs: black instead of white flash */
 @-moz-document url("about:blank") {
@@ -15,7 +15,12 @@
     --mono-fg: #e6e6e6;
     --mono-muted: #777777;
     --mono-accent: #a8bf4a;
-    --mono-accent-dim: #4f5a24;
+    --mono-accent-dim: #3b4520;
+    --mono-outline: #666666;
+    --mono-sky: #89c4e1;
+    --mono-lupine: #b4a0e0;
+    --mono-red: #e06c5f;
+    --mono-amber: #e2b86b;
 
     --newtab-background-color: var(--mono-bg) !important;
     --newtab-background-color-secondary: var(--mono-bg-2) !important;
@@ -42,7 +47,13 @@
     --in-content-primary-button-background-hover: #b9d15a !important;
     --in-content-primary-button-text-color: #000000 !important;
     --in-content-focus-outline-color: var(--mono-accent) !important;
-    --in-content-link-color: var(--mono-accent) !important;
+    --in-content-link-color: var(--mono-sky) !important;
+    --in-content-link-color-hover: #9cc4dc !important;
+    --in-content-link-color-visited: var(--mono-lupine) !important;
+    --text-color-error: var(--mono-red) !important;
+    --icon-color-critical: var(--mono-red) !important;
+    --icon-color-warning: var(--mono-amber) !important;
+    --icon-color-success: var(--mono-accent) !important;
 
     --background-color-canvas: var(--mono-bg) !important;
     --background-color-box: var(--mono-bg-2) !important;
@@ -53,17 +64,25 @@
     --color-accent-primary: var(--mono-accent) !important;
     --color-accent-primary-hover: #b9d15a !important;
     --button-text-color-primary: #000000 !important;
-    --link-color: var(--mono-accent) !important;
+    --link-color: var(--mono-sky) !important;
+    --link-color-hover: #9cc4dc !important;
+    --link-color-active: var(--mono-lupine) !important;
+    --border-color-interactive: var(--mono-outline) !important;
     --focus-outline-color: var(--mono-accent) !important;
     --border-radius-small: 0 !important;
     --border-radius-medium: 0 !important;
     --border-radius-large: 0 !important;
     --border-radius-xlarge: 0 !important;
+    --border-radius-circle: 0 !important;
+    --button-border-radius: 0 !important;
+    --input-border-radius: 0 !important;
 
     accent-color: var(--mono-accent) !important;
   }
   html, body { background-color: var(--mono-bg) !important; color: var(--mono-fg); }
   ::selection { background-color: var(--mono-accent-dim) !important; color: #ffffff !important; }
+  input, select, button, moz-input-search, moz-button, .category, search-textbox,
+  #searchInput, .search-container { border-radius: 0 !important; }
 }
 
 /* new tab: square tiles, monospace */
@@ -74,7 +93,8 @@
   .customize-menu, button { border-radius: 0 !important; }
   .search-wrapper input, .search-handoff-button {
     background-color: var(--mono-bg-2) !important;
-    border: 1px solid var(--mono-border) !important;
+    border: 1px solid var(--mono-outline) !important;
     box-shadow: none !important;
   }
+  .search-wrapper input:focus { border-color: var(--mono-accent) !important; }
 }

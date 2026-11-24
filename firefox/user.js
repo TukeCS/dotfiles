@@ -1,4 +1,4 @@
-// ---- Monochrome theme for the Firefox UI only (websites untouched) ----
+// ---- Desktop theme for the Firefox UI only (websites untouched) ----
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true); // load chrome/*.css
 user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
 user_pref("browser.theme.toolbar-theme", 0);                 // dark toolbars/menus
