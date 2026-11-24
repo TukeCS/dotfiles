@@ -1,0 +1,158 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 4,
+
+  "modules-left":   ["custom/launcher", "hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right":  [
+    "tray",
+    "idle_inhibitor",
+    "custom/gpu",
+    "custom/fan",
+    "cpu",
+    "memory",
+    "backlight",
+    "pulseaudio",
+    "bluetooth",
+    "network",
+    "battery",
+    "custom/power"
+  ],
+
+  "custom/launcher": {
+    "format": "󰣇",
+    "tooltip": false,
+    "on-click": "rofi -show drun"
+  },
+
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+    "persistent-workspaces": { "*": 5 }
+  },
+
+  "hyprland/window": {
+    "max-length": 45,
+    "separate-outputs": true,
+    "rewrite": { "": "desktop" }
+  },
+
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "format-alt": "{:%Y-%m-%d  %H:%M:%S}",
+    "interval": 1,
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "on-scroll": 1,
+      "format": {
+        "months":   "<span color='#ffffff'><b>{}</b></span>",
+        "weekdays": "<span color='#777777'><b>{}</b></span>",
+        "today":    "<span color='#000000' background='#ffffff'><b>{}</b></span>"
+      }
+    },
+    "actions": {
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+
+  "tray": { "icon-size": 16, "spacing": 8 },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": { "activated": "󰅶", "deactivated": "󰾪" },
+    "tooltip-format-activated": "Idle inhibitor: ON (screen stays awake)",
+    "tooltip-format-deactivated": "Idle inhibitor: off"
+  },
+
+  "custom/gpu": {
+    "exec": "~/.config/waybar/scripts/gpu-mode.sh",
+    "on-click": "~/.config/waybar/scripts/gpu-mode.sh next",
+    "return-type": "json",
+    "interval": 30,
+    "signal": 9
+  },
+
+  "custom/fan": {
+    "exec": "~/.config/waybar/scripts/fan-profile.sh",
+    "on-click": "~/.config/waybar/scripts/fan-profile.sh next",
+    "return-type": "json",
+    "interval": 10,
+    "signal": 8
+  },
+
+  "cpu": {
+    "format": "󰻠 {usage}%",
+    "interval": 3,
+    "on-click": "ghostty --class=tui.float -e sh -c 'command -v btop >/dev/null && exec btop || exec top'"
+  },
+
+  "memory": {
+    "format": "󰍛 {percentage}%",
+    "interval": 5,
+    "tooltip-format": "{used:0.1f} / {total:0.1f} GiB used",
+    "on-click": "ghostty --class=tui.float -e sh -c 'command -v btop >/dev/null && exec btop || exec top'"
+  },
+
+  "backlight": {
+    "device": "amdgpu_bl1",
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "on-scroll-up": "brightnessctl -e4 -n2 set 5%+",
+    "on-scroll-down": "brightnessctl -e4 -n2 set 5%-"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟 muted",
+    "format-bluetooth": "󰂰 {volume}%",
+    "format-icons": { "headphone": "󰋋", "default": ["󰕿", "󰖀", "󰕾"] },
+    "scroll-step": 5,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "ghostty --class=tui.float -e pulsemixer"
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "ghostty --class=tui.float -e bluetui"
+  },
+
+  "network": {
+    "format-wifi": "{icon} {essid}",
+    "format-ethernet": "󰈀 wired",
+    "format-disconnected": "󰤭 offline",
+    "format-icons": ["󰤟", "󰤢", "󰤥", "󰤨"],
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ifname} {ipaddr}\n {bandwidthDownBits}   {bandwidthUpBits}",
+    "tooltip-format-ethernet": "{ifname} {ipaddr}",
+    "max-length": 25,
+    "on-click": "ghostty --class=tui.float -e nmtui"
+  },
+
+  "battery": {
+    "interval": 30,
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
+    "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+    "tooltip-format": "{timeTo}  ·  {power:.1f} W",
+    "states": { "warning": 25, "critical": 10 }
+  },
+
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip": false,
+    "on-click": "~/.config/waybar/scripts/power-menu.sh"
+  }
+}

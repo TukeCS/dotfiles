@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# screenshot full   -> whole screen
+# screenshot region -> drag to select an area
+dir="$HOME/Pictures/Screenshots"
+mkdir -p "$dir"
+file="$dir/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"
+
+case "$1" in
+  region)
+    geom="$(slurp -d)" || exit 0          # Esc cancels
+    grim -g "$geom" "$file" ;;
+  *)
+    grim "$file" ;;
+esac
+
+[ -f "$file" ] || exit 1
+wl-copy < "$file"
+if command -v notify-send >/dev/null; then notify-send -i "$file" "Screenshot saved" "$(basename "$file") (copied to clipboard)"; fi

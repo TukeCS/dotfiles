@@ -1,0 +1,14 @@
+# ---- Monochrome theme ----
+font-family = JetBrainsMono Nerd Font
+font-size = 12
+background = #000000
+foreground = #e6e6e6
+cursor-color = #ffffff
+cursor-text = #000000
+selection-background = #4f5a24
+selection-foreground = #ffffff
+window-padding-x = 10
+window-padding-y = 10
+window-decoration = false
+background-opacity = 0.82
+background-blur = true

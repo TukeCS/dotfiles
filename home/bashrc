@@ -1,0 +1,29 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
+export PATH="$HOME/.local/bin:$PATH"
+
+# fastfetch that fits the terminal: big logo, small logo, or no logo
+fastfetch() {
+    if [ $# -gt 0 ]; then command fastfetch "$@"; return; fi
+    local cols; cols=$(tput cols 2>/dev/null || echo 120)
+    local d=~/.config/fastfetch
+    if   (( cols >= 79 )); then command fastfetch
+    elif (( cols >= 65 )); then command fastfetch --logo "$d/logo-blocks-small.txt" --logo-type file-raw
+    elif (( cols >= 57 )); then command fastfetch --logo "$d/logo-blocks-tiny.txt"  --logo-type file-raw
+    else                        command fastfetch --logo none
+    fi
+}
+
+# show fastfetch when a new interactive terminal opens
+if [[ $- == *i* ]] && [[ -z "$FASTFETCH_SHOWN" ]]; then
+    export FASTFETCH_SHOWN=1
+    fastfetch
+fi

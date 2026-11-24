@@ -1,0 +1,94 @@
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  border: none;
+  min-height: 0;
+}
+
+window#waybar {
+  background: rgba(0, 0, 0, 0.75);
+  color: #e6e6e6;
+  border: 1px solid #2e2e2e;
+  border-radius: 0;
+}
+
+tooltip {
+  background: #000000;
+  border: 1px solid #3a3a3a;
+  border-radius: 0;
+}
+tooltip label { color: #e6e6e6; }
+
+/* ---- left ---- */
+#custom-launcher {
+  font-size: 16px;
+  color: #ffffff;
+  padding: 0 12px 0 14px;
+}
+
+#workspaces { margin: 0 2px; }
+#workspaces button {
+  color: #777777;
+  background: transparent;
+  padding: 0 9px;
+  margin: 5px 2px;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+#workspaces button:hover  { background: #1a1a1a; color: #e6e6e6; box-shadow: none; }
+#workspaces button.active { background: #ffffff; color: #000000; }
+#workspaces button.urgent { background: #e6e6e6; color: #000000; }
+#workspaces button.empty  { color: #444444; }
+
+#window { color: #777777; padding: 0 10px; }
+
+/* ---- center ---- */
+#clock {
+  color: #ffffff;
+  font-weight: bold;
+  padding: 0 14px;
+  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+}
+
+/* ---- right ---- */
+#tray, #idle_inhibitor, #custom-gpu, #custom-fan, #cpu, #memory,
+#backlight, #pulseaudio, #bluetooth, #network, #battery {
+  padding: 0 11px;
+  margin: 5px 0;
+  color: #e6e6e6;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+}
+
+#custom-power {
+  color: #ffffff;
+  font-size: 15px;
+  padding: 0 14px 0 10px;
+  margin: 5px 5px 5px 0;
+  border-radius: 0;
+}
+#custom-power:hover { background: #ffffff; color: #000000; }
+
+#idle_inhibitor.activated      { background: #ffffff; color: #000000; }
+#custom-fan.performance        { color: #ffffff; font-weight: bold; }
+#custom-fan.quiet              { color: #999999; }
+#custom-gpu.integrated         { color: #999999; }
+
+#pulseaudio.muted, #bluetooth.off, #bluetooth.disabled,
+#network.disconnected          { color: #555555; }
+
+#battery.charging, #battery.plugged { color: #ffffff; }
+#battery.warning:not(.charging)  { background: #e6e6e6; color: #000000; }
+#battery.critical:not(.charging) { background: #ffffff; color: #000000; font-weight: bold; }
+
+/* ---- green accent (moss, from the wallpaper) ---- */
+tooltip                         { border-color: #4f5a24; }
+#custom-launcher                { color: #ffffff; }
+#workspaces button:hover        { color: #a8bf4a; }
+#workspaces button.urgent       { background: #a8bf4a; color: #000000; }
+#custom-fan.performance         { color: #a8bf4a; }
+#idle_inhibitor.activated       { background: #a8bf4a; color: #000000; }
+#battery.charging, #battery.plugged { color: #a8bf4a; }
+#custom-power:hover             { background: #a8bf4a; color: #000000; }
