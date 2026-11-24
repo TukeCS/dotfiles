@@ -9,9 +9,13 @@ configuration {
   font: "JetBrainsMono Nerd Font 12";
 }
 
+/* Matches the Ly login / hyprlock / mako box: solid black, square, moss-green border,
+   input in a dim outlined field, red only for urgent. */
 * {
-  fg:  #e6e6e6;
-  dim: #666666;
+  fg:   #e6e6e6;
+  dim:  #666666;
+  moss: #a8bf4a;
+  red:  #e07a5f;
   background-color: transparent;
   text-color: @fg;
   margin: 0; padding: 0; spacing: 0;
@@ -19,30 +23,36 @@ configuration {
 
 window {
   width: 480px;
-  background-color: #000000a6;
-  border: 1px;
-  border-color: #ffffff40;
+  background-color: #000000;
+  border: 2px;
+  border-color: @moss;
   border-radius: 0;
 }
 
-mainbox  { padding: 14px; spacing: 10px; children: [ inputbar, listview ]; }
+mainbox  { padding: 14px; spacing: 12px; children: [ inputbar, message, listview ]; }
 
-inputbar { children: [ prompt, entry ]; spacing: 8px; padding: 0 4px 8px 4px;
-           border: 0 0 1px 0; border-color: #ffffff26; }
-prompt   { text-color: #a8bf4a; }
-entry    { placeholder: ""; cursor: text; }
+/* like the lock screen's password field */
+inputbar { children: [ prompt, entry ]; spacing: 10px; padding: 8px 10px;
+           border: 1px; border-color: @dim; }
+prompt   { text-color: @moss; }
+entry    { placeholder: "search"; placeholder-color: @dim; cursor: text; cursor-color: @moss; }
 
-listview { lines: 8; fixed-height: true; scrollbar: false; spacing: 0; border: 0; }
-message, textbox, mode-switcher, button { border: 0; background-color: transparent; text-color: @dim; }
-entry { cursor-color: #a8bf4a; }
+message  { border: 0; padding: 0 4px; }
+textbox  { text-color: @dim; }
+mode-switcher, button { border: 0; text-color: @dim; }
 
-element  { padding: 6px 6px; spacing: 10px; children: [ element-icon, element-text ]; }
+listview { lines: 8; fixed-height: false; scrollbar: false; spacing: 2px; border: 0; }
+
+element  { padding: 6px 8px; spacing: 10px; children: [ element-icon, element-text ];
+           border: 0 0 0 2px; border-color: transparent; }
 element-icon { size: 20px; vertical-align: 0.5; }
-element-text { vertical-align: 0.5; }
-element-text { text-color: inherit; }
+element-text { vertical-align: 0.5; text-color: inherit; }
 element-text, element-icon { background-color: transparent; }
-element normal.normal, element alternate.normal,
-element normal.active, element alternate.active,
-element normal.urgent, element alternate.urgent { background-color: transparent; text-color: @dim; }
-element selected.normal, element selected.active,
-element selected.urgent { background-color: #ffffff14; text-color: #ffffff; border: 0 0 0 2px; border-color: #a8bf4a; }
+
+element normal.normal, element alternate.normal { background-color: transparent; text-color: @dim; }
+element normal.active, element alternate.active { background-color: transparent; text-color: @moss; }
+element normal.urgent, element alternate.urgent { background-color: transparent; text-color: @red; }
+
+element selected.normal { background-color: #ffffff0f; text-color: #ffffff; border-color: @moss; }
+element selected.active { background-color: #ffffff0f; text-color: @moss;   border-color: @moss; }
+element selected.urgent { background-color: #ffffff0f; text-color: @red;    border-color: @red; }

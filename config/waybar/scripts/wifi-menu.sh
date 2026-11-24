@@ -77,7 +77,7 @@ main() {
   if [ -z "$sec" ] || [ "$sec" = "--" ]; then
     out=$(nmcli dev wifi connect "$ssid" 2>&1)
   else
-    local pw; pw=$(menu "password" -password -l 0 </dev/null) || return
+    local pw; pw=$(menu "password" -password -l 0 -theme-str 'entry { placeholder: ""; }' </dev/null) || return
     [ -z "$pw" ] && return
     notify "Connecting…" "$ssid"
     out=$(nmcli dev wifi connect "$ssid" password "$pw" 2>&1)
