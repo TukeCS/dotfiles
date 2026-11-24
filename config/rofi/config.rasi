@@ -9,7 +9,7 @@ configuration {
   font: "JetBrainsMono Nerd Font 12";
 }
 
-/* Matches the Ly login / hyprlock / mako box: solid black, square, moss-green border,
+/* Matches the Ly login / hyprlock / mako box: translucent black (like waybar), square, moss-green border,
    input in a dim outlined field, red only for urgent. */
 * {
   fg:   #e6e6e6;
@@ -23,7 +23,7 @@ configuration {
 
 window {
   width: 480px;
-  background-color: #000000;
+  background-color: #000000bf;   /* 75%, blurred by Hyprland */
   border: 2px;
   border-color: @moss;
   border-radius: 0;

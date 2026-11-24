@@ -1,7 +1,7 @@
-# Matches the Ly login / hyprlock box: solid black, square, moss-green border,
+# Matches the Ly login / hyprlock box: translucent black (like waybar, blurred), square, moss-green border,
 # light grey text with dim grey labels, red only for critical.
 font=JetBrainsMono Nerd Font 11
-background-color=#000000ff
+background-color=#000000bf
 text-color=#e6e6e6
 border-color=#a8bf4a
 progress-color=over #3b4520

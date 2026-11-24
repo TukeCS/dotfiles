@@ -390,10 +390,24 @@ hl.window_rule({
     center = true,
 })
 
--- Blur behind rofi (transparent launcher)
+-- Blur behind the translucent layers: rofi, waybar, mako notifications
 hl.layer_rule({
     name         = "blur-rofi",
     match        = { namespace = "^rofi$" },
+    blur         = true,
+    ignore_alpha = 0,
+})
+
+hl.layer_rule({
+    name         = "blur-waybar",
+    match        = { namespace = "^waybar$" },
+    blur         = true,
+    ignore_alpha = 0,
+})
+
+hl.layer_rule({
+    name         = "blur-notifications",
+    match        = { namespace = "^notifications$" },
     blur         = true,
     ignore_alpha = 0,
 })
