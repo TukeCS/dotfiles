@@ -1,12 +1,31 @@
-# ---- Monochrome theme ----
+# ---- Theme: black, moss-green accent, Icelandic colours (same as Neovim) ----
 font-family = JetBrainsMono Nerd Font
 font-size = 12
 background = #000000
 foreground = #e6e6e6
-cursor-color = #ffffff
+cursor-color = #a8bf4a
 cursor-text = #000000
-selection-background = #4f5a24
+selection-background = #3b4520
 selection-foreground = #ffffff
+
+# 16 terminal colours, all readable on black: 0/8 black+grey, 1/9 lava red, 2/10 moss,
+# 3/11 amber, 4/12 fjord blue, 5/13 lupine purple, 6/14 aurora teal, 7/15 white
+palette = 0=#000000
+palette = 1=#e06c5f
+palette = 2=#a8bf4a
+palette = 3=#e2b86b
+palette = 4=#7aa6c2
+palette = 5=#b4a0e0
+palette = 6=#6cc5b0
+palette = 7=#c8c8c8
+palette = 8=#666666
+palette = 9=#f08a7e
+palette = 10=#c4dc62
+palette = 11=#f0d08a
+palette = 12=#9cc4dc
+palette = 13=#cbbcf0
+palette = 14=#8edcc8
+palette = 15=#ffffff
 window-padding-x = 10
 window-padding-y = 10
 window-decoration = false
