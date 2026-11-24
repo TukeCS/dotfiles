@@ -39,7 +39,7 @@ main() {
     labels+=("$(bars "$signal")  $ssid$lock$mark")
   done < <(nmcli -t --escape no -f ACTIVE,SIGNAL,SECURITY,SSID dev wifi list --rescan auto | sort -t: -k1,1r -k2,2nr)
 
-  local extra=$'󰑐  Rescan\n󰖪  Turn Wi-Fi off\n  Advanced (nmtui)'
+  local extra=$'󰑐  Rescan\n󰖪  Turn Wi-Fi off\n󰒓  Advanced (nmtui)'
   local choice
   choice=$( { printf '%s\n' "${labels[@]}"; printf '%s\n' "$extra"; } | menu 'wifi' -format i) || return
   [ -z "$choice" ] && return

@@ -73,7 +73,7 @@
 
   "custom/gpu": {
     "exec": "~/.config/waybar/scripts/gpu-mode.sh",
-    "on-click": "~/.config/waybar/scripts/gpu-mode.sh next",
+    "on-click": "~/.config/waybar/scripts/gpu-mode.sh menu",
     "return-type": "json",
     "interval": 30,
     "signal": 9
@@ -126,7 +126,8 @@
     "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
     "tooltip-format-connected": "{device_enumerate}",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "ghostty --class=tui.float -e bluetui"
+    "on-click": "~/.config/waybar/scripts/bt-menu.sh",
+    "on-click-right": "ghostty --class=tui.float -e bluetui"
   },
 
   "network": {

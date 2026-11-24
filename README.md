@@ -39,8 +39,9 @@ Screenshots are saved to `~/Pictures/Screenshots/Screenshot_YYYY-MM-DD_HH-MM-SS.
 ## Waybar
 
 - **Fan profile**: click to cycle Quiet / Balanced / Performance (needs `asusctl`).
-- **GPU mode**: click to switch Hybrid / Integrated (needs `supergfxctl`; hidden otherwise).
+- **GPU mode**: click for a rofi menu (Hybrid / iGPU / dGPU). Shows `dGPU → Hybrid` while a switch waits for a reboot (needs `supergfxctl`; hidden otherwise).
 - **Coffee cup**: idle inhibitor, keeps the screen awake.
+- **Bluetooth icon**: click for a rofi menu (connect, pair, disconnect, forget, scan); right-click for bluetui.
 - **Wi-Fi icon**: click for a rofi Wi-Fi menu (connect, password prompt, disconnect, forget); right-click for nmtui.
 - **Power icon**: lock, logout, suspend, reboot, shutdown.
 

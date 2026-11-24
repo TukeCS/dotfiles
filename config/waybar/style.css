@@ -92,3 +92,5 @@ tooltip                         { border-color: #4f5a24; }
 #idle_inhibitor.activated       { background: #a8bf4a; color: #000000; }
 #battery.charging, #battery.plugged { color: #a8bf4a; }
 #custom-power:hover             { background: #a8bf4a; color: #000000; }
+#custom-gpu.pending            { color: #a8bf4a; }
+#idle_inhibitor                 { padding: 0 14px 0 11px; }
