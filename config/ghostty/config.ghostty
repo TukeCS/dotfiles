@@ -12,3 +12,9 @@ window-padding-y = 10
 window-decoration = false
 background-opacity = 0.82
 background-blur = true
+
+# ---- Fast window opening ----
+# One resident Ghostty process (started by Hyprland at login) serves every window,
+# so new terminals skip the GTK cold start. Keybinds use `ghostty +new-window`.
+gtk-single-instance = true
+quit-after-last-window-closed = false
