@@ -100,9 +100,10 @@ hl.config({
 
         border_size = 2,
 
+        -- moss on the focused window, dim grey otherwise (same as the login/lock/rofi/mako boxes)
         col = {
-            active_border   = { colors = { "rgba(ffffffee)", "rgba(a8bf4aee)" }, angle = 45 },
-            inactive_border = "rgba(2e2e2eaa)",
+            active_border   = "rgba(a8bf4aff)",
+            inactive_border = "rgba(3a3a3acc)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -139,6 +140,31 @@ hl.config({
 
     animations = {
         enabled = true,
+    },
+
+    -- grouped (tabbed) windows: same colours, square tabs with the bar font
+    group = {
+        col = {
+            border_active          = "rgba(a8bf4aff)",
+            border_inactive        = "rgba(3a3a3acc)",
+            border_locked_active   = "rgba(e2b86bff)",
+            border_locked_inactive = "rgba(3a3a3acc)",
+        },
+        groupbar = {
+            font_family    = "JetBrainsMono Nerd Font",
+            font_size      = 11,
+            height         = 16,
+            rounding       = 0,
+            gradients      = true,
+            text_color          = "rgba(000000ff)",   -- on the moss active tab
+            text_color_inactive = "rgba(9a9a9aff)",   -- on the dark inactive tabs
+            col = {
+                active          = "rgba(a8bf4aff)",
+                inactive        = "rgba(1a1a1acc)",
+                locked_active   = "rgba(e2b86bff)",
+                locked_inactive = "rgba(1a1a1acc)",
+            },
+        },
     },
 })
 
