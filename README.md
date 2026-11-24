@@ -4,6 +4,7 @@ Hyprland setup for Arch Linux. Black and white, square corners, with a moss-gree
 
 | Part | What |
 |---|---|
+| Login screen | Ly: black TTY palette, moss-green box, big clock |
 | Window manager | Hyprland (Lua config), hyprpaper, hyprlock |
 | Bar | Waybar with fan-profile (asusctl), GPU mode (supergfxctl), power menu |
 | Launcher | rofi |
@@ -23,6 +24,9 @@ cd ~/dotfiles
 
 Existing files are moved to `~/.dotfiles-backup/<date>/` before being replaced.
 The configs are symlinks into this repo, so edits you make show up in `git status`.
+
+Ly: its files are copied to `/etc/ly/` with sudo (the old ones are kept as `.bak`), since Ly runs as root.
+To make Ly your login screen: `sudo systemctl disable getty@tty2 && sudo systemctl enable ly@tty2`.
 
 Firefox: the theme is linked into your default profile; restart Firefox to load it.
 

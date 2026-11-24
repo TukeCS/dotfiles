@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Dotfiles installer: Hyprland + Waybar + rofi + ghostty + fastfetch + Firefox, black/white with moss green.
+# Dotfiles installer: Ly + Hyprland + Waybar + rofi + ghostty + fastfetch + Firefox, black/white with moss green.
 #   ./install.sh            install packages + link configs
 #   ./install.sh --no-pkgs  only link configs
 set -euo pipefail
@@ -16,7 +16,7 @@ PKGS=(
   pulsemixer bluetui networkmanager
   dolphin qt5ct qt6ct qt6-wayland breeze breeze-icons
   ttf-jetbrains-mono-nerd python ffmpeg
-  firefox
+  firefox ly
 )
 
 install_pkgs() {
@@ -79,6 +79,25 @@ link_configs() {
   chmod +x "$DOT/local/bin/screenshot" "$DOT"/config/waybar/scripts/*.sh
 }
 
+# Ly (login screen) reads /etc/ly as root, so its files are copied there instead of linked
+install_ly() {
+  command -v ly >/dev/null || { warn "ly not installed: skipping the login screen theme"; return; }
+  local f changed=0
+  for f in config.ini startup.sh; do
+    cmp -s "$DOT/system/ly/$f" "/etc/ly/$f" || changed=1
+  done
+  [ "$changed" = 1 ] || return 0
+  say "Installing the Ly theme to /etc/ly (needs sudo)"
+  for f in config.ini startup.sh; do
+    [ -e "/etc/ly/$f" ] && sudo cp "/etc/ly/$f" "/etc/ly/$f.bak"
+  done
+  sudo install -m 644 "$DOT/system/ly/config.ini" /etc/ly/config.ini
+  sudo install -m 755 "$DOT/system/ly/startup.sh" /etc/ly/startup.sh
+  if ! systemctl is-enabled --quiet 'ly@tty2.service' 2>/dev/null; then
+    warn "Ly is not enabled. To use it: sudo systemctl disable getty@tty2 && sudo systemctl enable ly@tty2"
+  fi
+}
+
 extras() {
   mkdir -p "$HOME/Pictures/Screenshots" "$HOME/Pictures/Wallpapers"
   command -v kwriteconfig6 >/dev/null && kwriteconfig6 --file dolphinrc --group UiSettings --key ColorScheme Monochrome || true
@@ -90,5 +109,6 @@ extras() {
 
 [ "${1:-}" = "--no-pkgs" ] || install_pkgs
 link_configs
+install_ly
 extras
 say "Done. Log out and back in (or run: hyprctl reload; pkill waybar; waybar &)"
