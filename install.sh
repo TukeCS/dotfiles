@@ -81,7 +81,7 @@ link_configs() {
 
 # Ly (login screen) reads /etc/ly as root, so its files are copied there instead of linked
 install_ly() {
-  command -v ly >/dev/null || { warn "ly not installed: skipping the login screen theme"; return; }
+  [ -d /etc/ly ] || { warn "ly not installed: skipping the login screen theme"; return; }
   local f changed=0
   for f in config.ini startup.sh; do
     cmp -s "$DOT/system/ly/$f" "/etc/ly/$f" || changed=1
