@@ -21,7 +21,7 @@ fastfetch() {
     local cols; cols=$(_ff_cols)
     local d=~/.config/fastfetch
     if   (( cols >= 82 )); then command fastfetch
-    elif (( cols >= 58 )); then command fastfetch -c "$d/config-small.jsonc"
+    elif (( cols >= 62 )); then command fastfetch -c "$d/config-small.jsonc"
     else                        command fastfetch -c "$d/config-small.jsonc" --logo none
     fi
 }

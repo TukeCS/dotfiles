@@ -23,8 +23,10 @@
     { "type": "kernel",   "key": "kernel", "format": "{release}" },
     { "type": "uptime",   "key": "uptime" },
     { "type": "packages", "key": "pkgs",   "format": "{all}" },
+    { "type": "shell",    "key": "shell",  "format": "{pretty-name}" },
     { "type": "wm",       "key": "wm",     "format": "{pretty-name}" },
     { "type": "memory",   "key": "memory", "format": "{used} / {total}" },
+    { "type": "battery",  "key": "battery", "format": "{capacity}" },
     { "type": "colors", "symbol": "circle" }
   ]
 }
