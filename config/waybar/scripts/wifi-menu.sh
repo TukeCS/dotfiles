@@ -5,6 +5,30 @@
 
 menu() { rofi -dmenu -i -no-show-icons -theme-str 'element { children: [ element-text ]; }' -p "$1" "${@:2}"; }
 notify() { command -v notify-send >/dev/null && notify-send -a wifi "$@"; }
+askpw() { menu "${1:-password}" -password -l 0 -theme-str 'entry { placeholder: ""; }' </dev/null; }
+
+# UUID of the saved profile for an SSID (matched on SSID, not profile name)
+saved_con() {
+  local uuid type
+  while IFS=: read -r uuid type; do
+    [ "$type" = 802-11-wireless ] || continue
+    [ "$(nmcli --escape no -g 802-11-wireless.ssid con show uuid "$uuid")" = "$1" ] && { echo "$uuid"; return; }
+  done < <(nmcli -t -f UUID,TYPE con show)
+}
+
+# 802.1X (eduroam etc.): always ask for the password, never store it
+connect_eap() {
+  local uuid=$1 ssid=$2 user pw out
+  user=$(nmcli --escape no -g 802-1x.identity con show uuid "$uuid")
+  pw=$(askpw "${user:+$user }password") || return
+  [ -z "$pw" ] && return
+  notify "Connecting…" "$ssid"
+  if out=$(nmcli con up uuid "$uuid" passwd-file <(printf '802-1x.password:%s\n' "$pw") 2>&1); then
+    notify "Connected" "$ssid"
+  else
+    notify -u critical "Couldn't connect" "$ssid: ${out##*Error: }"
+  fi
+}
 
 bars() {
   local s=$1
@@ -56,19 +80,36 @@ main() {
 
   local ssid=${ssids[$choice]} sec=${secs[$choice]} active=${actives[$choice]}
 
+  local con; con=$(saved_con "$ssid")
+
   if [ "$active" = "yes" ]; then
     case "$(printf '󰖪  Disconnect\n󰆴  Forget network\n' | menu "$ssid")" in
-      *Disconnect) nmcli con down id "$ssid" >/dev/null && notify "Disconnected" "$ssid" ;;
-      *Forget*)    nmcli con delete id "$ssid" >/dev/null && notify "Forgot network" "$ssid" ;;
+      *Disconnect) nmcli dev disconnect "$(nmcli -t -f DEVICE,TYPE dev | awk -F: '$2=="wifi"{print $1; exit}')" >/dev/null && notify "Disconnected" "$ssid" ;;
+      *Forget*)    [ -n "$con" ] && nmcli con delete uuid "$con" >/dev/null && notify "Forgot network" "$ssid" ;;
     esac
     return
   fi
 
-  # Saved network: just bring it up
-  if nmcli -t -f NAME con show | grep -Fxq "$ssid"; then
+  # Saved network: bring it up with the stored password, no prompt
+  if [ -n "$con" ]; then
+    if [ "$(nmcli -g 802-11-wireless-security.key-mgmt con show uuid "$con")" = wpa-eap ]; then
+      connect_eap "$con" "$ssid"; return
+    fi
     notify "Connecting…" "$ssid"
-    if nmcli con up id "$ssid" >/dev/null 2>&1; then notify "Connected" "$ssid"
-    else notify -u critical "Couldn't connect" "$ssid"; fi
+    if nmcli con up uuid "$con" >/dev/null 2>&1; then notify "Connected" "$ssid"; return; fi
+    # Stored password missing or wrong: ask once and save it for next time
+    if [ -n "$sec" ] && [ "$sec" != "--" ]; then
+      local pw; pw=$(askpw) || return
+      [ -z "$pw" ] && return
+      nmcli con modify uuid "$con" wifi-sec.psk "$pw" wifi-sec.psk-flags 0
+      if nmcli con up uuid "$con" >/dev/null 2>&1; then notify "Connected" "$ssid"; return; fi
+    fi
+    notify -u critical "Couldn't connect" "$ssid"
+    return
+  fi
+
+  if [[ "$sec" == *802.1X* ]]; then
+    notify -u critical "Enterprise network" "No saved profile for $ssid. Use eduroam-connect or nmtui."
     return
   fi
 
@@ -77,7 +118,7 @@ main() {
   if [ -z "$sec" ] || [ "$sec" = "--" ]; then
     out=$(nmcli dev wifi connect "$ssid" 2>&1)
   else
-    local pw; pw=$(menu "password" -password -l 0 -theme-str 'entry { placeholder: ""; }' </dev/null) || return
+    local pw; pw=$(askpw) || return
     [ -z "$pw" ] && return
     notify "Connecting…" "$ssid"
     out=$(nmcli dev wifi connect "$ssid" password "$pw" 2>&1)
