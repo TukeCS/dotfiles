@@ -23,7 +23,7 @@ connect_eap() {
   pw=$(askpw "${user:+$user }password") || return
   [ -z "$pw" ] && return
   notify "Connecting…" "$ssid"
-  if out=$(nmcli con up uuid "$uuid" passwd-file <(printf '802-1x.password:%s\n' "$pw") 2>&1); then
+  if out=$(nmcli con up uuid "$uuid" passwd-file <(printf '802-1x.identity:%s\n802-1x.password:%s\n' "$user" "$pw") 2>&1); then
     notify "Connected" "$ssid"
   else
     notify -u critical "Couldn't connect" "$ssid: ${out##*Error: }"
