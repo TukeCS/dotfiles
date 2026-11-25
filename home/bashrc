@@ -14,8 +14,6 @@ PS1='\[\e[32m\]\u\[\e[90m\]@\h \[\e[94m\]\w\[\e[0m\] \[\e[$(( $? ? 31 : 32 ))m\]
 # man pages in colour (headings green, highlighted words blue)
 export MANPAGER="less -R --use-color -Dd+g -Du+b"
 export MANROFFOPT="-P -c"
-export PATH="$HOME/.local/bin:$PATH"
-
 # fastfetch that fits the terminal: big logo, small logo, or no logo
 fastfetch() {
     if [ $# -gt 0 ]; then command fastfetch "$@"; return; fi

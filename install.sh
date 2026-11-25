@@ -53,6 +53,7 @@ link_configs() {
   link "$DOT/local/bin/screenshot" "$HOME/.local/bin/screenshot"
   link "$DOT/local/share/color-schemes/Monochrome.colors" "$HOME/.local/share/color-schemes/Monochrome.colors"
   link "$DOT/home/bashrc" "$HOME/.bashrc"
+  link "$DOT/home/bash_profile" "$HOME/.bash_profile"
 
   # Firefox theme: link into the profile Firefox actually uses
   local ffdir="$HOME/.config/mozilla/firefox" ffprof=""

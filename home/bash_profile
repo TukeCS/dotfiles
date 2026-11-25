@@ -1,0 +1,10 @@
+#
+# ~/.bash_profile
+#
+# Login shells (TTY, and Ly when it starts Hyprland) read this file. Environment
+# goes here so GUI apps launched from Hyprland/rofi see it as well.
+# ~/.bashrc is only for interactive shell settings.
+
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc
