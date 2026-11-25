@@ -14,20 +14,38 @@ PS1='\[\e[32m\]\u\[\e[90m\]@\h \[\e[94m\]\w\[\e[0m\] \[\e[$(( $? ? 31 : 32 ))m\]
 # man pages in colour (headings green, highlighted words blue)
 export MANPAGER="less -R --use-color -Dd+g -Du+b"
 export MANROFFOPT="-P -c"
-# fastfetch that fits the terminal: big logo, small logo, or no logo
+# fastfetch that fits the terminal: full layout, compact layout, or compact with no logo
+_ff_cols() { local s; s=$(stty size 2>/dev/null) && echo "${s#* }" || echo 120; }
 fastfetch() {
     if [ $# -gt 0 ]; then command fastfetch "$@"; return; fi
-    local cols; cols=$(tput cols 2>/dev/null || echo 120)
+    local cols; cols=$(_ff_cols)
     local d=~/.config/fastfetch
-    if   (( cols >= 79 )); then command fastfetch
-    elif (( cols >= 65 )); then command fastfetch --logo "$d/logo-blocks-small.txt" --logo-type file-raw
-    elif (( cols >= 57 )); then command fastfetch --logo "$d/logo-blocks-tiny.txt"  --logo-type file-raw
-    else                        command fastfetch --logo none
+    if   (( cols >= 82 )); then command fastfetch
+    elif (( cols >= 58 )); then command fastfetch -c "$d/config-small.jsonc"
+    else                        command fastfetch -c "$d/config-small.jsonc" --logo none
     fi
 }
 
 # show fastfetch when a new interactive terminal opens
-if [[ $- == *i* ]] && [[ -z "$FASTFETCH_SHOWN" ]]; then
+if [[ -z "$FASTFETCH_SHOWN" ]]; then
     export FASTFETCH_SHOWN=1
+    # Hyprland tiles a new window just after it opens; wait for the size to settle
+    # so the logo isn't drawn at the wrong width and then wrapped.
+    _ff_last=
+    for _ in {1..12}; do
+        _ff_now=$(stty size 2>/dev/null)
+        [[ $_ff_now == "$_ff_last" ]] && break
+        _ff_last=$_ff_now; sleep 0.05
+    done
     fastfetch
+    # If the window is resized before you run anything (e.g. another window opens
+    # next to it), redraw instead of leaving a wrapped, broken logo.
+    _ff_redraw() {
+        printf '\e[H\e[2J\e[3J'; fastfetch
+        local p=${PS1@P}; p=${p//$'\001'/}; p=${p//$'\002'/}; printf '%s' "$p"
+    }
+    trap _ff_redraw WINCH
+    _ff_n=0
+    _ff_stop() { (( _ff_n++ )) && { trap - WINCH; PROMPT_COMMAND=${PROMPT_COMMAND/_ff_stop;/}; }; }
+    PROMPT_COMMAND="_ff_stop;${PROMPT_COMMAND}"
 fi
