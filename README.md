@@ -1,12 +1,12 @@
 # dotfiles
 
-Hyprland setup for Arch Linux. Black and white, square corners, with a moss-green accent.
+Hyprland setup for Arch Linux. "Glow terminal": near-square (4px) frosted panels with a soft gold glow, gold accent with lake-blue highlights, JetBrains Mono everywhere, terminal-style touches (`❯` titles, `run:` launcher, `whoami` lock screen). Wallpaper (still or animated) is managed by `livewall`. The terminal and Neovim use the Rust-tuned "oxide" colours.
 
 | Part | What |
 |---|---|
-| Login screen | Ly: your wallpaper as full-screen block art, black box with a moss-green border |
+| Login screen | Ly: your wallpaper as full-screen block art, dark box with a gold border |
 | Window manager | Hyprland (Lua config), hyprpaper |
-| Lock screen | hyprlock: the wallpaper with the same moss-bordered box and corner clock as the login screen |
+| Lock screen | hyprlock: the wallpaper with the same frosted card and corner clock as the login screen |
 | Bar | Waybar with fan-profile (asusctl), GPU mode (supergfxctl), power menu |
 | Launcher | rofi |
 | Terminal | ghostty + fastfetch with a block-art logo |
@@ -14,8 +14,8 @@ Hyprland setup for Arch Linux. Black and white, square corners, with a moss-gree
 | Editor | Neovim (Rust / Zig / Python): transparent, Icelandic syntax colours, F5–F8 build/run/test/lint |
 | Monitor | btop with a matching theme (opened from the CPU/memory modules) |
 | Shell | bash prompt and man pages in the same colours |
-| Theme | Qt/KDE colour scheme (Dolphin etc.) and GTK, both with the moss accent |
-| Browser | Firefox `userChrome.css` / `userContent.css`: black UI, moss-green selected tab, square corners (websites untouched) |
+| Theme | Qt/KDE colour scheme (Dolphin etc.) and GTK, both in the golden hour palette |
+| Browser | Firefox `userChrome.css` / `userContent.css`: black UI, gold-underlined selected tab, square corners (websites untouched) |
 
 ## Install
 

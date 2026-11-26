@@ -2,25 +2,25 @@
 
 /* blank tabs: black instead of white flash */
 @-moz-document url("about:blank") {
-  html, body { background-color: #000000 !important; }
+  html, body { background-color: #14110e !important; }
 }
 
 /* new tab / home / settings / about:* pages */
 @-moz-document url-prefix("about:"), url-prefix("chrome:"), url-prefix("moz-extension:") {
   :root {
-    --mono-bg: #000000;
-    --mono-bg-2: #0d0d0d;
-    --mono-bg-3: #1a1a1a;
-    --mono-border: #2e2e2e;
-    --mono-fg: #e6e6e6;
-    --mono-muted: #777777;
-    --mono-accent: #a8bf4a;
-    --mono-accent-dim: #3b4520;
-    --mono-outline: #666666;
-    --mono-sky: #89c4e1;
-    --mono-lupine: #b4a0e0;
-    --mono-red: #e06c5f;
-    --mono-amber: #e2b86b;
+    --mono-bg: #14110e;
+    --mono-bg-2: #18140f;
+    --mono-bg-3: #211c17;
+    --mono-border: #3a3027;
+    --mono-fg: #f6ead8;
+    --mono-muted: #b9ad9c;
+    --mono-accent: #f4b942;
+    --mono-accent-dim: #5c4415;
+    --mono-outline: #5a4d40;
+    --mono-sky: #f7cf72;
+    --mono-lupine: #d69ac0;
+    --mono-red: #e5534b;
+    --mono-amber: #f29a38;
 
     --newtab-background-color: var(--mono-bg) !important;
     --newtab-background-color-secondary: var(--mono-bg-2) !important;
@@ -45,10 +45,10 @@
     --in-content-item-selected: var(--mono-accent-dim) !important;
     --in-content-primary-button-background: var(--mono-accent) !important;
     --in-content-primary-button-background-hover: #b9d15a !important;
-    --in-content-primary-button-text-color: #000000 !important;
+    --in-content-primary-button-text-color: #14110e !important;
     --in-content-focus-outline-color: var(--mono-accent) !important;
     --in-content-link-color: var(--mono-sky) !important;
-    --in-content-link-color-hover: #9cc4dc !important;
+    --in-content-link-color-hover: #f7cf72 !important;
     --in-content-link-color-visited: var(--mono-lupine) !important;
     --text-color-error: var(--mono-red) !important;
     --icon-color-critical: var(--mono-red) !important;
@@ -63,26 +63,26 @@
     --border-color-card: var(--mono-border) !important;
     --color-accent-primary: var(--mono-accent) !important;
     --color-accent-primary-hover: #b9d15a !important;
-    --button-text-color-primary: #000000 !important;
+    --button-text-color-primary: #14110e !important;
     --link-color: var(--mono-sky) !important;
-    --link-color-hover: #9cc4dc !important;
+    --link-color-hover: #f7cf72 !important;
     --link-color-active: var(--mono-lupine) !important;
     --border-color-interactive: var(--mono-outline) !important;
     --focus-outline-color: var(--mono-accent) !important;
-    --border-radius-small: 0 !important;
-    --border-radius-medium: 0 !important;
-    --border-radius-large: 0 !important;
-    --border-radius-xlarge: 0 !important;
+    --border-radius-small: 4px !important;
+    --border-radius-medium: 4px !important;
+    --border-radius-large: 4px !important;
+    --border-radius-xlarge: 4px !important;
     --border-radius-circle: 0 !important;
-    --button-border-radius: 0 !important;
-    --input-border-radius: 0 !important;
+    --button-border-radius: 4px !important;
+    --input-border-radius: 4px !important;
 
     accent-color: var(--mono-accent) !important;
   }
   html, body { background-color: var(--mono-bg) !important; color: var(--mono-fg); }
-  ::selection { background-color: var(--mono-accent-dim) !important; color: #ffffff !important; }
+  ::selection { background-color: var(--mono-accent) !important; color: #14110e !important; }
   input, select, button, moz-input-search, moz-button, .category, search-textbox,
-  #searchInput, .search-container { border-radius: 0 !important; }
+  #searchInput, .search-container { border-radius: 3px !important; }
 }
 
 /* new tab: square tiles, monospace */
@@ -90,7 +90,7 @@
   body { font-family: "JetBrainsMono Nerd Font", monospace !important; }
   .top-site-outer .tile, .top-site-outer .top-site-icon, .search-handoff-button,
   .search-wrapper input, .card-outer, .card, .ds-card, .context-menu,
-  .customize-menu, button { border-radius: 0 !important; }
+  .customize-menu, button { border-radius: 3px !important; }
   .search-wrapper input, .search-handoff-button {
     background-color: var(--mono-bg-2) !important;
     border: 1px solid var(--mono-outline) !important;

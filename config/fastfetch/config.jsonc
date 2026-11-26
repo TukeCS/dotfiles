@@ -8,10 +8,10 @@
   "display": {
     "separator": "  ",
     "color": {
-      "keys": "#a8bf4a",
-      "title": "#a8bf4a",
-      "output": "#bdbdbd",
-      "separator": "#555555"
+      "keys": "#e8732a",
+      "title": "#f5ad42",
+      "output": "#ecdfcc",
+      "separator": "#6b5a4a"
     },
     "key": { "width": 9 }
   },

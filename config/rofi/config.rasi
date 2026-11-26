@@ -4,55 +4,59 @@ configuration {
   icon-theme: "breeze-dark";
   terminal: "ghostty";
   drun-display-format: "{name}";
-  display-drun: "›";
+  display-drun: "run:";
   display-run: "run";
-  font: "JetBrainsMono Nerd Font 12";
+  font: "JetBrainsMono Nerd Font 11";
 }
 
-/* Matches the Ly login / hyprlock / mako box: translucent black (like waybar), square, moss-green border,
-   input in a dim outlined field, red only for urgent. */
+/* "glow terminal": frosted panel (blurred by Hyprland), near-square, monospace, a "run:"
+   prompt; the selected entry is a solid gold bar with dark text so it is always obvious. */
 * {
-  fg:   #e6e6e6;
-  dim:  #666666;
-  moss: #a8bf4a;
-  red:  #e07a5f;
+  fg:     #f6ead8;
+  dim:    #c9bfb0;
+  faint:  #8f8676;
+  gold:   #f4b942;
+  amber:  #f29a38;
+  blue:   #9db8e8;
+  red:    #e5534b;
+  dark:   #12141f;
   background-color: transparent;
   text-color: @fg;
   margin: 0; padding: 0; spacing: 0;
 }
 
 window {
-  width: 480px;
-  background-color: #000000bf;   /* 75%, blurred by Hyprland */
-  border: 2px;
-  border-color: @moss;
-  border-radius: 0;
+  width: 560px;
+  background-color: #12141fa6;
+  border: 1px;
+  border-color: #f6ead829;
+  border-radius: 6px;
 }
 
-mainbox  { padding: 14px; spacing: 12px; children: [ inputbar, message, listview ]; }
+mainbox  { padding: 16px; spacing: 14px; children: [ inputbar, message, listview ]; }
 
-/* like the lock screen's password field */
-inputbar { children: [ prompt, entry ]; spacing: 10px; padding: 8px 10px;
-           border: 1px; border-color: @dim; }
-prompt   { text-color: @moss; }
-entry    { placeholder: "search"; placeholder-color: @dim; cursor: text; cursor-color: @moss; }
+inputbar { children: [ prompt, entry ]; spacing: 10px; padding: 10px 16px;
+           background-color: #f6ead80f; border-radius: 3px;
+           border: 0 0 1px 0; border-color: #f4b94266; }
+prompt   { text-color: @gold; }
+entry    { placeholder: "_"; placeholder-color: @faint; cursor: text; cursor-color: @gold; }
 
 message  { border: 0; padding: 0 4px; }
-textbox  { text-color: @dim; }
+textbox  { text-color: @amber; }
 mode-switcher, button { border: 0; text-color: @dim; }
 
-listview { lines: 8; fixed-height: false; scrollbar: false; spacing: 2px; border: 0; }
+listview { lines: 8; fixed-height: false; scrollbar: false; spacing: 4px; border: 0; }
 
-element  { padding: 6px 8px; spacing: 10px; children: [ element-icon, element-text ];
-           border: 0 0 0 2px; border-color: transparent; }
-element-icon { size: 20px; vertical-align: 0.5; }
+element  { padding: 8px 12px; spacing: 12px; children: [ element-icon, element-text ];
+           border-radius: 3px; }
+element-icon { size: 24px; vertical-align: 0.5; }
 element-text { vertical-align: 0.5; text-color: inherit; }
 element-text, element-icon { background-color: transparent; }
 
 element normal.normal, element alternate.normal { background-color: transparent; text-color: @dim; }
-element normal.active, element alternate.active { background-color: transparent; text-color: @moss; }
+element normal.active, element alternate.active { background-color: transparent; text-color: @blue; }
 element normal.urgent, element alternate.urgent { background-color: transparent; text-color: @red; }
 
-element selected.normal { background-color: #ffffff0f; text-color: #ffffff; border-color: @moss; }
-element selected.active { background-color: #ffffff0f; text-color: @moss;   border-color: @moss; }
-element selected.urgent { background-color: #ffffff0f; text-color: @red;    border-color: @red; }
+element selected.normal { background-color: @gold;  text-color: @dark; }
+element selected.active { background-color: @blue;  text-color: @dark; }
+element selected.urgent { background-color: @red;   text-color: @dark; }

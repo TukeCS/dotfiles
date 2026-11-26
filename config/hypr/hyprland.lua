@@ -29,6 +29,12 @@ hl.monitor({
     scale    = "auto",
 })
 
+-- XWayland apps (games, etc.) see the native 2560x1600 instead of the scaled 1600x1000
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
+    },
+})
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -50,7 +56,7 @@ local menu = "rofi -show drun"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function () 
-   hl.exec_cmd("waybar & mako & hyprpaper")
+   hl.exec_cmd("waybar & mako & ~/.local/bin/livewall")  -- animated wallpaper (mpvpaper), falls back to hyprpaper
    hl.exec_cmd("ghostty --initial-window=false")  -- preload Ghostty in the background
 end)
 
@@ -95,15 +101,16 @@ hl.env("XDG_MENU_PREFIX", "arch-")  -- makes Dolphin's "Open With" menu work out
 -- Refer to https://wiki.hypr.land/configuring/core/config-options/
 hl.config({
     general = {
-        gaps_in  = 5,
-        gaps_out = 10,
+        -- "glow terminal": near-square windows with a soft glow
+        gaps_in  = 6,
+        gaps_out = 14,
 
         border_size = 2,
 
-        -- moss on the focused window, dim grey otherwise (same as the login/lock/rofi/mako boxes)
+        -- focused window: gold fading into deep orange; others: a faint warm edge
         col = {
-            active_border   = "rgba(a8bf4aff)",
-            inactive_border = "rgba(3a3a3acc)",
+            active_border   = { colors = {"rgba(f4b942ee)", "rgba(e3762bee)"}, angle = 135 },
+            inactive_border = "rgba(f6ead826)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -116,25 +123,30 @@ hl.config({
     },
 
     decoration = {
-        rounding       = 0,
+        rounding       = 4,      -- just softened, still square and techy
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
         inactive_opacity = 0.88,
 
+        -- soft glow: warm gold around the focused window, plain soft shadow on the rest
         shadow = {
-            enabled      = true,
-            range        = 4,
-            render_power = 3,
-            color        = 0xee000000,
+            enabled        = true,
+            range          = 22,
+            render_power   = 3,
+            offset         = {0, 4},
+            color          = "rgba(f4b94240)",
+            color_inactive = "rgba(00000059)",
         },
 
         blur = {
             enabled   = true,
-            size      = 6,
+            size      = 8,   -- frosted glass
             passes    = 3,
-            vibrancy  = 0.1696,
+            vibrancy  = 0.25,
+            noise     = 0.015,
+            brightness = 0.9,
         },
     },
 
@@ -145,24 +157,25 @@ hl.config({
     -- grouped (tabbed) windows: same colours, square tabs with the bar font
     group = {
         col = {
-            border_active          = "rgba(a8bf4aff)",
-            border_inactive        = "rgba(3a3a3acc)",
-            border_locked_active   = "rgba(e2b86bff)",
-            border_locked_inactive = "rgba(3a3a3acc)",
+            border_active          = { colors = {"rgba(f4b942ee)", "rgba(e3762bee)"}, angle = 135 },
+            border_inactive        = "rgba(f6ead826)",
+            border_locked_active   = "rgba(78bfa8ff)",
+            border_locked_inactive = "rgba(f6ead826)",
         },
         groupbar = {
             font_family    = "JetBrainsMono Nerd Font",
             font_size      = 11,
-            height         = 16,
-            rounding       = 0,
+            height         = 18,
+            rounding       = 2,
             gradients      = true,
-            text_color          = "rgba(000000ff)",   -- on the moss active tab
-            text_color_inactive = "rgba(9a9a9aff)",   -- on the dark inactive tabs
+            gaps_out       = 3,
+            text_color          = "rgba(12141fff)",   -- on the gold active tab
+            text_color_inactive = "rgba(b9ad9cff)",   -- on the dark inactive tabs
             col = {
-                active          = "rgba(a8bf4aff)",
-                inactive        = "rgba(1a1a1acc)",
-                locked_active   = "rgba(e2b86bff)",
-                locked_inactive = "rgba(1a1a1acc)",
+                active          = "rgba(f4b942ee)",
+                inactive        = "rgba(12141fb3)",
+                locked_active   = "rgba(78bfa8ff)",
+                locked_inactive = "rgba(12141fb3)",
             },
         },
     },
@@ -178,22 +191,25 @@ hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1} 
 -- Default springs
 hl.curve("easy",           { type = "spring", mass = 1, stiffness = 238.1191, damping = 24.21279333 })
 
-hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  spring = "easy",         style = "popin 87%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 1.49, bezier = "linear",       style = "popin 87%" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 3.03, bezier = "quick" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
+-- Smooth and soft: windows float in, workspaces glide with a fade
+hl.curve("glide", { type = "bezier", points = { {0.22, 1}, {0.36, 1} } })
+hl.animation({ leaf = "global",        enabled = true,  speed = 8,    bezier = "default" })
+hl.animation({ leaf = "border",        enabled = true,  speed = 6,    bezier = "easeOutQuint" })
+hl.animation({ leaf = "borderangle",   enabled = true,  speed = 60,   bezier = "linear",       style = "loop" })
+hl.animation({ leaf = "windows",       enabled = true,  speed = 4.5,  spring = "easy" })
+hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4,    bezier = "glide",        style = "popin 90%" })
+hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 2.5,  bezier = "easeInOutCubic", style = "popin 90%" })
+hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 2.5,  bezier = "almostLinear" })
+hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 2,    bezier = "almostLinear" })
+hl.animation({ leaf = "fade",          enabled = true,  speed = 3,    bezier = "quick" })
+hl.animation({ leaf = "layers",        enabled = true,  speed = 3.5,  bezier = "glide" })
+hl.animation({ leaf = "layersIn",      enabled = true,  speed = 3.5,  bezier = "glide",        style = "popin 92%" })
+hl.animation({ leaf = "layersOut",     enabled = true,  speed = 2,    bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 2.5,  bezier = "almostLinear" })
+hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 2,    bezier = "almostLinear" })
+hl.animation({ leaf = "workspaces",    enabled = true,  speed = 4,    bezier = "glide",        style = "slidefade 15%" })
+hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 4,    bezier = "glide",        style = "slidefade 15%" })
+hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 4,    bezier = "glide",        style = "slidefade 15%" })
 hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/configuring/core/rules/workspace-rules/
@@ -243,7 +259,7 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,     -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = true,
-        background_color        = 0x000000,  -- solid black desktop
+        background_color        = 0x12141f,  -- ink blue behind the wallpaper
     },
 })
 
@@ -440,7 +456,7 @@ hl.layer_rule({
     name         = "blur-waybar",
     match        = { namespace = "^waybar$" },
     blur         = true,
-    ignore_alpha = 0,
+    ignore_alpha = 0.2,   -- blur only under the islands, not their soft shadows
 })
 
 hl.layer_rule({

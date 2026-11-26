@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# Wallpaper manager: animated (mpvpaper) or still (hyprpaper).
+#
+#   livewall                      start the wallpaper (Hyprland runs this at login)
+#   livewall set [FILE]           use FILE (default: newest image/video in ~/Downloads)
+#   livewall set [FILE] --pixel   same, for pixel art: sharp nearest-neighbour scaling
+#   livewall stop                 stop the animated wallpaper
+#
+# Files in ~/Pictures/Wallpapers:
+#   current.png  the still image (hyprpaper, hyprlock, Ly login). Always present.
+#   live.mp4     only while an animated wallpaper is chosen; removed when you pick an image.
+set -euo pipefail
+DIR="$HOME/Pictures/Wallpapers"
+VIDEO="$DIR/live.mp4"
+STILL="$DIR/current.png"
+
+panel_size() {   # physical panel size, e.g. 2560x1600 (for the still image)
+    hyprctl monitors -j 2>/dev/null | python3 -c '
+import json, sys; m = json.load(sys.stdin)[0]; print(f"{m["width"]}x{m["height"]}")' 2>/dev/null || echo 2560x1600
+}
+
+video_size() {
+    # The size mpvpaper actually draws at: it rounds a fractional scale UP (1.6 -> 2),
+    # so on a 2560x1600 panel at 1.6 it renders 1600x1000 * 2 = 3200x2000.
+    # Rendering the video at exactly that size means mpv never rescales it (no blur).
+    hyprctl monitors -j 2>/dev/null | python3 -c '
+import json, sys, math
+m = json.load(sys.stdin)[0]
+s = m["scale"]; k = math.ceil(s - 1e-6)
+print(f"{round(m["width"] / s) * k}x{round(m["height"] / s) * k}")' 2>/dev/null || echo 3200x2000
+}
+
+fill_filter() {  # scale to cover WxH and crop the overflow; $3 = 1 for pixel art
+    local flags=lanczos; [ "$3" = 1 ] && flags=neighbor
+    echo "scale=w=$1:h=$2:force_original_aspect_ratio=increase:flags=$flags,crop=$1:$2"
+}
+
+start() {
+    pkill -x mpvpaper 2>/dev/null || true
+    if command -v mpvpaper >/dev/null && [ -f "$VIDEO" ]; then
+        pkill -x hyprpaper 2>/dev/null || true
+        # -p: pause while the wallpaper is fully covered (saves battery)
+        setsid -f mpvpaper -p -o "no-audio loop hwdec=auto-safe panscan=1.0 profile=fast \
+            input-ipc-server=/tmp/livewall-$USER.sock" '*' "$VIDEO" >/dev/null 2>&1
+    else
+        pkill -x hyprpaper 2>/dev/null || true   # restart so it picks up a new current.png
+        setsid -f hyprpaper >/dev/null 2>&1
+    fi
+}
+
+set_wall() {
+    local src="" pixel=0 a
+    for a in "$@"; do
+        case "$a" in --pixel) pixel=1 ;; *) src="$a" ;; esac
+    done
+    if [ -z "$src" ]; then
+        src=$(ls -t "$HOME"/Downloads/*.{mp4,webm,mkv,mov,gif,png,jpg,jpeg,webp} 2>/dev/null | head -1 || true)
+        [ -n "$src" ] || { echo "no image or video in ~/Downloads" >&2; exit 1; }
+    fi
+    [ -f "$src" ] || { echo "not found: $src" >&2; exit 1; }
+    mkdir -p "$DIR"
+    local pw ph; IFS=x read -r pw ph <<<"$(panel_size)"
+    echo "using $(basename "$src")"
+    case "${src,,}" in
+        *.png|*.jpg|*.jpeg|*.webp)
+            ffmpeg -v error -y -i "$src" -vf "$(fill_filter "$pw" "$ph" "$pixel")" -frames:v 1 "$STILL"
+            rm -f "$VIDEO" ;;
+        *)
+            local vw vh; IFS=x read -r vw vh <<<"$(video_size)"
+            echo "rendering at ${vw}x${vh} ..."
+            ffmpeg -v error -stats -y -i "$src" -an -vf "$(fill_filter "$vw" "$vh" "$pixel")" \
+                -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart "$VIDEO.new"
+            mv -f "$VIDEO.new" "$VIDEO"
+            ffmpeg -v error -y -ss 2 -i "$VIDEO" -frames:v 1 -vf "scale=$pw:$ph" "$STILL" ;;
+    esac
+    start
+    echo "done. (Ly login background updates with: ~/dotfiles/install.sh --no-pkgs)"
+}
+
+case "${1:-start}" in
+    start) start ;;
+    stop)  pkill -x mpvpaper || true ;;
+    set)   shift; set_wall "$@" ;;
+    *)     sed -n 2,11p "$0"; exit 1 ;;
+esac

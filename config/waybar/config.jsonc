@@ -1,11 +1,11 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 34,
-  "margin-top": 6,
+  "height": 44,
+  "margin-top": 8,
   "margin-left": 10,
   "margin-right": 10,
-  "spacing": 4,
+  "spacing": 0,
 
   "modules-left":   ["custom/launcher", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
@@ -37,13 +37,14 @@
   },
 
   "hyprland/window": {
+    "format": "❯ {}",
     "max-length": 45,
     "separate-outputs": true,
-    "rewrite": { "": "desktop" }
+    "rewrite": { "": "~", "❯ ": "❯ ~" }
   },
 
   "clock": {
-    "format": "{:%a %d %b  %H:%M}",
+    "format": "{:%a %d %b  %H:%M:%S}",
     "format-alt": "{:%Y-%m-%d  %H:%M:%S}",
     "interval": 1,
     "tooltip-format": "<tt>{calendar}</tt>",
@@ -51,9 +52,9 @@
       "mode": "month",
       "on-scroll": 1,
       "format": {
-        "months":   "<span color='#a8bf4a'><b>{}</b></span>",
-        "weekdays": "<span color='#666666'><b>{}</b></span>",
-        "today":    "<span color='#000000' background='#a8bf4a'><b>{}</b></span>"
+        "months":   "<span color='#f4b942'><b>{}</b></span>",
+        "weekdays": "<span color='#b9ad9c'><b>{}</b></span>",
+        "today":    "<span color='#12141f' background='#f4b942'><b>{}</b></span>"
       }
     },
     "actions": {
@@ -88,13 +89,13 @@
   },
 
   "cpu": {
-    "format": "<span color='#89c4e1'>󰻠</span> {usage}%",
+    "format": "<span color='#f2785c'>󰻠</span>  {usage}%",
     "interval": 3,
     "on-click": "ghostty --class=tui.float -e sh -c 'command -v btop >/dev/null && exec btop || exec top'"
   },
 
   "memory": {
-    "format": "<span color='#b4a0e0'>󰍛</span> {percentage}%",
+    "format": "<span color='#c79cf0'>󰍛</span>  {percentage}%",
     "interval": 5,
     "tooltip-format": "{used:0.1f} / {total:0.1f} GiB used",
     "on-click": "ghostty --class=tui.float -e sh -c 'command -v btop >/dev/null && exec btop || exec top'"
@@ -102,16 +103,16 @@
 
   "backlight": {
     "device": "amdgpu_bl1",
-    "format": "<span color='#e2b86b'>{icon}</span> {percent}%",
+    "format": "<span color='#f7d154'>{icon}</span>  {percent}%",
     "format-icons": ["󰃞", "󰃟", "󰃠"],
     "on-scroll-up": "brightnessctl -e4 -n2 set 5%+",
     "on-scroll-down": "brightnessctl -e4 -n2 set 5%-"
   },
 
   "pulseaudio": {
-    "format": "<span color='#6cc5b0'>{icon}</span> {volume}%",
-    "format-muted": "󰝟 muted",
-    "format-bluetooth": "<span color='#6cc5b0'>󰂰</span> {volume}%",
+    "format": "<span color='#ee8fb0'>{icon}</span>  {volume}%",
+    "format-muted": "󰝟  muted",
+    "format-bluetooth": "<span color='#ee8fb0'>󰂰</span>  {volume}%",
     "format-icons": { "headphone": "󰋋", "default": ["󰕿", "󰖀", "󰕾"] },
     "scroll-step": 5,
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
@@ -143,9 +144,9 @@
 
   "battery": {
     "interval": 30,
-    "format": "<span color='#a8bf4a'>{icon}</span> {capacity}%",
-    "format-charging": "<span color='#a8bf4a'>󰂄</span> {capacity}%",
-    "format-plugged": "<span color='#a8bf4a'>󰚥</span> {capacity}%",
+    "format": "<span color='#a6c47a'>{icon}</span>  {capacity}%",
+    "format-charging": "<span color='#a6c47a'>󰂄</span>  {capacity}%",
+    "format-plugged": "<span color='#a6c47a'>󰚥</span>  {capacity}%",
     "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
     "tooltip-format": "{timeTo}  ·  {power:.1f} W",
     "states": { "warning": 25, "critical": 10 }

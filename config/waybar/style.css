@@ -1,98 +1,105 @@
-/* Matches the Ly login / hyprlock / rofi / mako boxes: translucent black, square,
-   moss-green border. Icons use the same Icelandic colours as Ghostty and Neovim:
-   moss #a8bf4a, sky #89c4e1, lupine #b4a0e0, amber #e2b86b, aurora #6cc5b0,
-   fjord #7aa6c2, copper #d99a6c, lava #e06c5f. */
+/* "glow terminal": three floating frosted islands, near-square, monospace (left / center / right). Gold #f4b942 accent, cream text; status icons each get their own colour (coral cpu, lavender mem,
+   yellow light, pink volume, violet bluetooth, teal wifi, green battery, red power),
+   #f6ead8, ink glass rgba(18,20,31,.55). Alerts: amber (warning), red #e5534b (critical). */
 * {
   font-family: "JetBrainsMono Nerd Font";
   font-size: 13px;
+  font-weight: 500;
   border: none;
+  border-radius: 0;
   min-height: 0;
 }
 
-window#waybar {
-  background: rgba(0, 0, 0, 0.75);
-  color: #e6e6e6;
-  border: 2px solid #a8bf4a;
-  border-radius: 0;
+window#waybar { background: transparent; color: #f6ead8; }
+
+/* the islands */
+.modules-left, .modules-center, .modules-right {
+  background: rgba(18, 20, 31, 0.55);
+  border: 1px solid rgba(246, 234, 216, 0.16);
+  border-radius: 4px;
+  padding: 0 6px;
+  margin: 2px 0 8px 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.30);
 }
 
 tooltip {
-  background: rgba(0, 0, 0, 0.9);
-  border: 2px solid #a8bf4a;
-  border-radius: 0;
+  background: rgba(18, 20, 31, 0.92);
+  border: 1px solid rgba(244, 185, 66, 0.45);
+  border-radius: 4px;
 }
-tooltip label { color: #e6e6e6; }
+tooltip label { color: #f6ead8; }
 
 /* ---- left ---- */
 #custom-launcher {
+  font-family: "JetBrainsMono Nerd Font";
   font-size: 16px;
-  color: #a8bf4a;
-  padding: 0 12px 0 14px;
+  color: #f4b942;
+  padding: 0 10px 0 8px;
 }
 
 #workspaces { margin: 0 2px; }
 #workspaces button {
-  color: #666666;
+  color: rgba(246, 234, 216, 0.55);
   background: transparent;
-  padding: 0 9px;
-  margin: 5px 2px;
-  border-radius: 0;
+  padding: 0 7px;
+  margin: 6px 1px;
+  border-radius: 2px;
   border-bottom: 2px solid transparent;
+  box-shadow: none;
   transition: all 0.2s ease;
 }
-#workspaces button:hover  { background: rgba(255, 255, 255, 0.06); color: #e6e6e6; box-shadow: none; }
-#workspaces button.active { background: rgba(255, 255, 255, 0.06); color: #ffffff; border-bottom-color: #a8bf4a; }
-#workspaces button.urgent { color: #e06c5f; border-bottom-color: #e06c5f; }
-#workspaces button.empty  { color: #3a3a3a; }
+#workspaces button:hover  { color: #f6ead8; background: rgba(246, 234, 216, 0.08); }
+#workspaces button.active {                /* like a terminal cursor under the number */
+  color: #f4b942;
+  font-weight: 800;
+  background: rgba(244, 185, 66, 0.14);
+  border-bottom-color: #f4b942;
+}
+#workspaces button.urgent { color: #e5534b; border-bottom-color: #e5534b; }
+#workspaces button.empty  { color: rgba(246, 234, 216, 0.28); }
 
-#window { color: #666666; padding: 0 10px; }
+#window { color: #f4b942; padding: 0 10px; }
 
 /* ---- center ---- */
 #clock {
-  color: #ffffff;
-  font-weight: bold;
+  color: #f6ead8;
+  font-weight: 600;
   padding: 0 14px;
-  margin: 5px 0;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 0;
 }
 
 /* ---- right ---- */
 #tray, #idle_inhibitor, #custom-gpu, #custom-fan, #cpu, #memory,
 #backlight, #pulseaudio, #bluetooth, #network, #battery {
-  padding: 0 11px;
-  margin: 5px 0;
-  color: #e6e6e6;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 0;
+  padding: 0 9px;
+  color: #f6ead8;
+  background: transparent;
 }
-#idle_inhibitor { padding: 0 14px 0 11px; color: #666666; }
-#idle_inhibitor.activated { background: #a8bf4a; color: #000000; }
 
-#custom-gpu                 { color: #7aa6c2; }
-#custom-gpu.integrated      { color: #6cc5b0; }
-#custom-gpu.pending         { color: #e2b86b; }
+#idle_inhibitor { color: #8f8676; }
+#idle_inhibitor.activated { color: #f7d154; }
 
-#custom-fan                 { color: #e6e6e6; }
+#custom-gpu                 { color: #f29a38; }
+#custom-gpu.integrated      { color: #a6c47a; }
+#custom-gpu.pending         { color: #f4b942; font-weight: 700; }
+
+#custom-fan                 { color: #f5b78a; }
 #custom-fan.quiet           { color: #6cc5b0; }
-#custom-fan.performance     { color: #d99a6c; font-weight: bold; }
+#custom-fan.performance     { color: #f2785c; }
 
-#bluetooth                  { color: #7aa6c2; }
-#bluetooth.connected        { color: #89c4e1; }
-#network                    { color: #89c4e1; }
+#bluetooth                  { color: #b48ef0; }
+#network                    { color: #6cc5b0; }
+#bluetooth.connected        { color: #d2b8ff; }
 
 #pulseaudio.muted, #bluetooth.off, #bluetooth.disabled,
-#network.disconnected       { color: #555555; }
+#network.disconnected       { color: #5d5f72; }
 
-#battery.charging, #battery.plugged { color: #a8bf4a; }
-#battery.warning:not(.charging)  { color: #e2b86b; }
-#battery.critical:not(.charging) { background: #e06c5f; color: #000000; font-weight: bold; }
+#battery.warning:not(.charging)  { color: #f29a38; }
+#battery.critical:not(.charging) { color: #12141f; background: #e5534b; border-radius: 2px; margin: 7px 0; }
 
 #custom-power {
-  color: #e6e6e6;
+  font-family: "JetBrainsMono Nerd Font";
+  color: #e5534b;
   font-size: 15px;
-  padding: 0 14px 0 10px;
-  margin: 5px 5px 5px 0;
-  border-radius: 0;
+  padding: 0 10px 0 8px;
 }
-#custom-power:hover { background: #e06c5f; color: #000000; }
+#custom-power:hover { color: #ff7a70; }

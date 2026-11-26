@@ -50,7 +50,7 @@ if [ "$1" = "menu" ]; then
   msg="Now: $(short "$cur")"
   [ -n "$pend" ] && msg+="   →   $(short "$pend") after reboot (pick $(short "$cur") to cancel)"
   idx=$(printf '%s' "$labels" | rofi -dmenu -i -no-show-icons -format i -p 'gpu' -mesg "$msg" \
-        -theme-str 'element { children: [ element-text ]; } listview { lines: 3; } window { width: 640px; } mainbox { children: [ inputbar, message, listview ]; } textbox { text-color: #a8bf4a; padding: 0 4px; }') || exit 0
+        -theme-str 'element { children: [ element-text ]; } listview { lines: 3; } window { width: 640px; } mainbox { children: [ inputbar, message, listview ]; } textbox { text-color: #f29a38; padding: 0 4px; }') || exit 0
   [ -z "$idx" ] && exit 0
   new=${modes[$idx]}
   # Nothing to do if it's already the mode we're in with nothing pending, or already pending
@@ -71,7 +71,7 @@ if [ "$1" = "menu" ]; then
   exit 0
 fi
 
-text="󰢮 $(short "$cur")"
+text="󰢮  $(short "$cur")"
 tip="GPU: $(describe "$cur")"
 cls=$(echo "$cur" | tr '[:upper:]' '[:lower:]')
 if [ -n "$pend" ]; then

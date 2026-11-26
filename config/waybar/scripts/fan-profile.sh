@@ -13,4 +13,4 @@ case "$p" in
   *)           icon="󰈐"; p="${p:-unknown}" ;;
 esac
 cls="$(echo "$p" | tr '[:upper:]' '[:lower:]')"
-printf '{"text":"%s %s","tooltip":"Fan profile: %s\\nClick: next profile","class":"%s"}\n' "$icon" "$p" "$p" "$cls"
+printf '{"text":"%s  %s","tooltip":"Fan profile: %s\\nClick: next profile","class":"%s"}\n' "$icon" "$p" "$p" "$cls"

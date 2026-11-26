@@ -181,76 +181,151 @@ local plugins = {
       })
       vim.cmd.colorscheme("lackluster-night")
 
-      -- Iceland palette on top of the greyscale base (matches the desktop theme).
-      -- One hue per kind of thing so code is easy to scan; moss stays the accent.
+      -- "oxide": rust palette on top of the greyscale base (same colours as the desktop).
+      -- Warm metals for the language itself, cooler oxides for types/lifetimes so
+      -- Rust code stays easy to scan. One hue per kind of thing.
       local c = {
-        moss    = "#b8d14e", -- keywords, UI accent
-        amber   = "#e2b86b", -- strings
-        lupine  = "#b4a0e0", -- numbers, booleans, constants
-        sky     = "#89c4e1", -- functions
-        aurora  = "#6cc5b0", -- types
-        fjord   = "#7aa6c2", -- builtins, modules
-        copper  = "#d99a6c", -- attributes, macros, escapes
-        sand    = "#c8bfa8", -- parameters, fields
-        snow    = "#e6e6e6", -- variables
-        ash     = "#9a9a9a", -- operators
-        basalt  = "#6b7268", -- comments
-        lava    = "#e06c5f", -- errors
-        sulfur  = "#e6c35c", -- warnings
-        glacier = "#8fb8c4",
+        rust    = "#e8732a", -- keywords (fn, let, match, impl), UI accent
+        orange  = "#f2913d", -- self, builtins
+        gold    = "#f7c862", -- functions / methods
+        amber   = "#f5ad42", -- warnings, current search
+        ember   = "#f2603f", -- macros (println!, vec!)
+        copper  = "#c98a5e", -- attributes #[derive], escapes
+        olive   = "#b5bd68", -- strings
+        patina  = "#78bfa8", -- types, structs, enums, traits
+        steel   = "#8fb2c9", -- lifetimes, modules / crates
+        rose    = "#d690ad", -- numbers, booleans, constants, enum variants
+        sand    = "#d4bfa4", -- parameters, fields
+        text    = "#ecdfcc", -- variables
+        ash     = "#b39b84", -- operators
+        dust    = "#8a7563", -- punctuation
+        rustbrown = "#7d6656", -- comments
+        red     = "#e0463a", -- errors
       }
       local set = function(group, opts) vim.api.nvim_set_hl(0, group, opts) end
       for group, opts in pairs({
-        Keyword = { fg = c.moss, bold = true }, Statement = { fg = c.moss, bold = true },
-        Conditional = { fg = c.moss, bold = true }, Repeat = { fg = c.moss, bold = true },
-        Exception = { fg = c.moss, bold = true },
-        ["@keyword"] = { fg = c.moss, bold = true }, ["@keyword.return"] = { fg = c.moss, bold = true },
-        ["@keyword.function"] = { fg = c.moss, bold = true }, ["@keyword.import"] = { fg = c.moss },
-        ["@keyword.operator"] = { fg = c.moss }, ["@keyword.modifier"] = { fg = c.moss },
-        String = { fg = c.amber }, ["@string"] = { fg = c.amber },
-        Character = { fg = c.amber }, ["@character"] = { fg = c.amber },
-        ["@string.escape"] = { fg = c.copper }, ["@string.special"] = { fg = c.copper },
+        Normal = { fg = c.text },
+        Keyword = { fg = c.rust, bold = true }, Statement = { fg = c.rust, bold = true },
+        Conditional = { fg = c.rust, bold = true }, Repeat = { fg = c.rust, bold = true },
+        Exception = { fg = c.rust, bold = true }, StorageClass = { fg = c.rust },
+        ["@keyword"] = { fg = c.rust, bold = true }, ["@keyword.return"] = { fg = c.rust, bold = true },
+        ["@keyword.function"] = { fg = c.rust, bold = true }, ["@keyword.import"] = { fg = c.rust },
+        ["@keyword.operator"] = { fg = c.rust }, ["@keyword.modifier"] = { fg = c.rust },
+        ["@keyword.repeat"] = { fg = c.rust, bold = true }, ["@keyword.conditional"] = { fg = c.rust, bold = true },
+        ["@keyword.exception"] = { fg = c.rust, bold = true }, ["@keyword.type"] = { fg = c.rust, bold = true },
+        String = { fg = c.olive }, ["@string"] = { fg = c.olive },
+        Character = { fg = c.olive }, ["@character"] = { fg = c.olive },
+        ["@string.escape"] = { fg = c.copper, bold = true }, ["@string.special"] = { fg = c.copper },
         ["@string.regexp"] = { fg = c.copper },
-        Function = { fg = c.sky, bold = true }, ["@function"] = { fg = c.sky, bold = true },
-        ["@function.call"] = { fg = c.sky }, ["@function.method"] = { fg = c.sky, bold = true },
-        ["@function.method.call"] = { fg = c.sky }, ["@constructor"] = { fg = c.aurora },
-        ["@function.builtin"] = { fg = c.fjord }, ["@function.macro"] = { fg = c.copper },
-        Macro = { fg = c.copper }, PreProc = { fg = c.copper },
-        Type = { fg = c.aurora }, ["@type"] = { fg = c.aurora }, ["@type.builtin"] = { fg = c.fjord },
-        ["@type.definition"] = { fg = c.aurora },
-        Number = { fg = c.lupine }, Float = { fg = c.lupine }, ["@number"] = { fg = c.lupine },
-        ["@number.float"] = { fg = c.lupine },
-        Boolean = { fg = c.lupine }, ["@boolean"] = { fg = c.lupine },
-        Constant = { fg = c.lupine }, ["@constant"] = { fg = c.lupine },
-        ["@constant.builtin"] = { fg = c.lupine, italic = true },
-        ["@variable"] = { fg = c.snow }, ["@variable.builtin"] = { fg = c.fjord, italic = true },
+        Function = { fg = c.gold, bold = true }, ["@function"] = { fg = c.gold, bold = true },
+        ["@function.call"] = { fg = c.gold }, ["@function.method"] = { fg = c.gold, bold = true },
+        ["@function.method.call"] = { fg = c.gold }, ["@constructor"] = { fg = c.patina },
+        ["@function.builtin"] = { fg = c.orange }, ["@function.macro"] = { fg = c.ember, bold = true },
+        Macro = { fg = c.ember, bold = true }, PreProc = { fg = c.copper },
+        Type = { fg = c.patina }, ["@type"] = { fg = c.patina }, ["@type.builtin"] = { fg = c.patina, italic = true },
+        ["@type.definition"] = { fg = c.patina, bold = true },
+        Number = { fg = c.rose }, Float = { fg = c.rose }, ["@number"] = { fg = c.rose },
+        ["@number.float"] = { fg = c.rose },
+        Boolean = { fg = c.rose }, ["@boolean"] = { fg = c.rose },
+        Constant = { fg = c.rose }, ["@constant"] = { fg = c.rose },
+        ["@constant.builtin"] = { fg = c.rose, italic = true },
+        ["@variable"] = { fg = c.text }, ["@variable.builtin"] = { fg = c.orange, italic = true }, -- self
         ["@variable.parameter"] = { fg = c.sand }, ["@variable.member"] = { fg = c.sand },
         ["@property"] = { fg = c.sand }, ["@field"] = { fg = c.sand },
-        ["@module"] = { fg = c.fjord }, ["@label"] = { fg = c.copper },
-        ["@attribute"] = { fg = c.copper },
+        ["@module"] = { fg = c.steel }, ["@label"] = { fg = c.steel, italic = true }, -- 'a lifetimes
+        ["@attribute"] = { fg = c.copper }, ["@attribute.builtin"] = { fg = c.copper },
         Operator = { fg = c.ash }, ["@operator"] = { fg = c.ash },
-        ["@punctuation"] = { fg = "#7d7d7d" }, ["@punctuation.bracket"] = { fg = "#8a8a8a" },
-        Comment = { fg = c.basalt, italic = true }, ["@comment"] = { fg = c.basalt, italic = true },
-        ["@comment.todo"] = { fg = "#000000", bg = c.sulfur, bold = true },
-        Todo = { fg = "#000000", bg = c.sulfur, bold = true },
-        ["@markup.heading"] = { fg = c.moss, bold = true }, ["@markup.link"] = { fg = c.sky, underline = true },
-        ["@markup.raw"] = { fg = c.amber }, ["@markup.strong"] = { bold = true },
+        ["@punctuation"] = { fg = c.dust }, ["@punctuation.bracket"] = { fg = c.dust },
+        ["@punctuation.delimiter"] = { fg = c.dust }, ["@punctuation.special"] = { fg = c.copper },
+        Comment = { fg = c.rustbrown, italic = true }, ["@comment"] = { fg = c.rustbrown, italic = true },
+        ["@comment.documentation"] = { fg = "#9c8470", italic = true }, -- /// doc comments a bit brighter
+        ["@comment.todo"] = { fg = "#0e0b09", bg = c.amber, bold = true },
+        ["@comment.error"] = { fg = "#0e0b09", bg = c.red, bold = true },
+        ["@comment.warning"] = { fg = "#0e0b09", bg = c.amber, bold = true },
+        ["@comment.note"] = { fg = "#0e0b09", bg = c.steel, bold = true },
+        Todo = { fg = "#0e0b09", bg = c.amber, bold = true },
+        ["@markup.heading"] = { fg = c.rust, bold = true }, ["@markup.link"] = { fg = c.steel, underline = true },
+        ["@markup.raw"] = { fg = c.olive }, ["@markup.strong"] = { bold = true },
         ["@markup.italic"] = { italic = true }, ["@markup.list"] = { fg = c.copper },
+
+        -- rust-analyzer semantic tokens (these win over tree-sitter when the LSP is running)
+        ["@lsp.type.lifetime"] = { fg = c.steel, italic = true },
+        ["@lsp.type.macro"] = { fg = c.ember, bold = true },
+        ["@lsp.type.derive"] = { fg = c.copper },
+        ["@lsp.type.attribute"] = { fg = c.copper },
+        ["@lsp.type.decorator"] = { fg = c.copper },
+        ["@lsp.type.interface"] = { fg = c.patina, italic = true },         -- traits
+        ["@lsp.type.struct"] = { fg = c.patina },
+        ["@lsp.type.enum"] = { fg = c.patina },
+        ["@lsp.type.enumMember"] = { fg = c.rose },                         -- Some, None, Ok, Err
+        ["@lsp.type.typeParameter"] = { fg = c.patina, italic = true },     -- <T>
+        ["@lsp.type.typeAlias"] = { fg = c.patina },
+        ["@lsp.type.builtinType"] = { fg = c.patina, italic = true },       -- u32, str
+        ["@lsp.type.selfKeyword"] = { fg = c.orange, italic = true },
+        ["@lsp.type.selfTypeKeyword"] = { fg = c.patina, italic = true },   -- Self
+        ["@lsp.type.namespace"] = { fg = c.steel },
+        ["@lsp.type.crateRoot"] = { fg = c.steel, italic = true },
+        ["@lsp.type.parameter"] = { fg = c.sand },
+        ["@lsp.type.property"] = { fg = c.sand },
+        ["@lsp.type.const"] = { fg = c.rose },
+        ["@lsp.type.static"] = { fg = c.rose, italic = true },
+        ["@lsp.type.formatSpecifier"] = { fg = c.copper, bold = true },     -- {} {:?} inside format!
+        ["@lsp.type.escapeSequence"] = { fg = c.copper, bold = true },
+        ["@lsp.type.unresolvedReference"] = { undercurl = true, sp = c.red },
+        ["@lsp.mod.mutable"] = { underline = true },                        -- let mut x: x is underlined
+        ["@lsp.mod.unsafe"] = { fg = c.red, bold = true },                  -- unsafe fn / unsafe ops
+        ["@lsp.typemod.keyword.unsafe"] = { fg = c.red, bold = true },
+        ["@lsp.mod.consuming"] = { italic = true },                         -- self moved into the call
+        ["@lsp.typemod.function.unsafe"] = { fg = c.red, bold = true },
+        ["@lsp.typemod.method.unsafe"] = { fg = c.red, bold = true },
+
         -- UI
-        CursorLineNr = { fg = c.moss, bold = true }, LineNr = { fg = "#3a4038" },
-        Visual = { bg = "#3b4520" }, Search = { fg = "#000000", bg = c.moss },
-        IncSearch = { fg = "#000000", bg = c.amber }, CurSearch = { fg = "#000000", bg = c.amber },
-        MatchParen = { fg = c.moss, bold = true, underline = true },
-        Directory = { fg = c.moss }, Title = { fg = c.moss, bold = true },
-        PmenuSel = { fg = "#000000", bg = c.moss }, FloatBorder = { fg = c.basalt },
-        WinSeparator = { fg = "#2a2f28" },
+        CursorLineNr = { fg = c.rust, bold = true }, LineNr = { fg = "#4e3f33" },
+        CursorLine = { bg = "#1a1410" }, ColorColumn = { bg = "#1a1410" },
+        -- selection: deep rust background, clearly visible against the dark editor
+        Visual = { bg = "#6b3415" }, VisualNOS = { bg = "#6b3415" },
+        Search = { fg = "#0e0b09", bg = c.gold }, IncSearch = { fg = "#0e0b09", bg = c.rust, bold = true },
+        CurSearch = { fg = "#0e0b09", bg = c.rust, bold = true }, Substitute = { fg = "#0e0b09", bg = c.ember },
+        MatchParen = { fg = c.amber, bg = "#3a2a1e", bold = true },
+        Directory = { fg = c.rust }, Title = { fg = c.rust, bold = true },
+        Pmenu = { fg = c.text, bg = "#1a1410" }, PmenuSel = { fg = "#0e0b09", bg = c.rust, bold = true },
+        PmenuSbar = { bg = "#2a2019" }, PmenuThumb = { bg = c.rust },
+        FloatBorder = { fg = c.rust }, FloatTitle = { fg = c.rust, bold = true },
+        WinSeparator = { fg = "#3a2c22" }, NonText = { fg = "#4e3f33" }, Whitespace = { fg = "#3a2c22" },
+        Cursor = { fg = "#0e0b09", bg = c.rust },
+        StatusLine = { fg = c.sand }, StatusLineNC = { fg = c.dust },
+        WildMenu = { fg = "#0e0b09", bg = c.rust },
+        TelescopeSelection = { fg = c.text, bg = "#4a2610", bold = true },
+        TelescopeSelectionCaret = { fg = c.rust, bg = "#4a2610", bold = true },
+        TelescopeMatching = { fg = c.amber, bold = true },
+        TelescopeBorder = { fg = c.rust }, TelescopePromptBorder = { fg = c.rust },
+        TelescopePromptPrefix = { fg = c.rust }, TelescopeTitle = { fg = c.rust, bold = true },
+        BlinkCmpMenuSelection = { fg = "#0e0b09", bg = c.rust, bold = true },
+        BlinkCmpLabelMatch = { fg = c.amber, bold = true },
+        BlinkCmpMenuBorder = { fg = c.rust }, BlinkCmpDocBorder = { fg = c.rust },
+        WhichKey = { fg = c.rust }, WhichKeyGroup = { fg = c.patina }, WhichKeyDesc = { fg = c.text },
+        OilDir = { fg = c.rust, bold = true },
+        LspInlayHint = { fg = "#7d6656", bg = "#16110d", italic = true },
+        LspReferenceText = { bg = "#2e2219" }, LspReferenceRead = { bg = "#2e2219" },
+        LspReferenceWrite = { bg = "#3d2a1c", underline = true },
         -- Diagnostics / git
-        DiagnosticError = { fg = c.lava }, DiagnosticWarn = { fg = c.sulfur },
-        DiagnosticInfo = { fg = c.sky }, DiagnosticHint = { fg = c.aurora },
-        DiagnosticOk = { fg = c.moss },
-        DiffAdd = { fg = c.moss }, Added = { fg = c.moss }, GitSignsAdd = { fg = c.moss },
+        DiagnosticError = { fg = c.red }, DiagnosticWarn = { fg = c.amber },
+        DiagnosticInfo = { fg = c.steel }, DiagnosticHint = { fg = c.patina },
+        DiagnosticOk = { fg = c.olive },
+        DiagnosticUnderlineError = { undercurl = true, sp = c.red },
+        DiagnosticUnderlineWarn = { undercurl = true, sp = c.amber },
+        DiagnosticUnderlineInfo = { undercurl = true, sp = c.steel },
+        DiagnosticUnderlineHint = { undercurl = true, sp = c.patina },
+        DiagnosticVirtualTextError = { fg = c.red, bg = "#2a1310" },
+        DiagnosticVirtualTextWarn = { fg = c.amber, bg = "#2a1f10" },
+        DiagnosticVirtualTextInfo = { fg = c.steel, bg = "#121a20" },
+        DiagnosticVirtualTextHint = { fg = c.patina, bg = "#10201b" },
+        DiffAdd = { fg = c.olive }, Added = { fg = c.olive }, GitSignsAdd = { fg = c.olive },
         DiffChange = { fg = c.amber }, Changed = { fg = c.amber }, GitSignsChange = { fg = c.amber },
-        DiffDelete = { fg = c.lava }, Removed = { fg = c.lava }, GitSignsDelete = { fg = c.lava },
+        DiffDelete = { fg = c.red }, Removed = { fg = c.red }, GitSignsDelete = { fg = c.red },
+        -- crates.nvim (Cargo.toml)
+        CratesNvimVersion = { fg = c.rustbrown }, CratesNvimUpgrade = { fg = c.amber },
+        CratesNvimError = { fg = c.red }, CratesNvimLoading = { fg = c.dust },
       }) do set(group, opts) end
 
       -- transparency: clear the backgrounds that would otherwise paint solid black
@@ -274,12 +349,26 @@ local plugins = {
 
   -- Statusline
   { "nvim-lualine/lualine.nvim", opts = function()
-    -- middle of the statusline transparent, mode/branch blocks keep their colours
-    local theme = require("lualine.themes.auto")
-    for _, mode in pairs(theme) do
-      if mode.c then mode.c.bg = "NONE" end
+    -- oxide colours: mode block changes colour per mode, middle stays transparent
+    local bg, fg, dim = "#1a1410", "#ecdfcc", "#8a7563"
+    local function mode(col)
+      return {
+        a = { fg = "#0e0b09", bg = col, gui = "bold" },
+        b = { fg = col, bg = bg },
+        c = { fg = fg, bg = "NONE" },
+      }
     end
-    return { options = { theme = theme, globalstatus = true } }
+    local theme = {
+      normal   = mode("#e8732a"),  -- rust
+      insert   = mode("#b5bd68"),  -- olive
+      visual   = mode("#f7c862"),  -- gold
+      replace  = mode("#e0463a"),  -- red
+      command  = mode("#78bfa8"),  -- patina
+      terminal = mode("#8fb2c9"),  -- steel
+      inactive = { a = { fg = dim, bg = bg }, b = { fg = dim, bg = bg }, c = { fg = dim, bg = "NONE" } },
+    }
+    return { options = { theme = theme, globalstatus = true,
+                         section_separators = "", component_separators = "│" } }
   end },
 
   -- Keybinding hints (press <space> and wait)

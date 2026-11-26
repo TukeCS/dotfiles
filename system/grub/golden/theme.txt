@@ -1,0 +1,81 @@
+# GRUB theme "glow terminal": the wallpaper as background, a near-square ink glass panel
+# with a gold edge on the left (the ribbons stay visible), selected entry as a gold bar.
+# Fonts: JetBrains Mono (grub-mkfont).
+
+title-text: ""
+desktop-image: "background.jpg"
+desktop-image-scale-method: "crop"
+desktop-color: "#12141f"
+message-font: "JetBrainsMono NF Regular 22"
+message-color: "#f6ead8"
+message-bg-color: "#12141f"
+terminal-font: "JetBrainsMono NF Regular 22"
+terminal-box: "menu_*.png"
+
+# heading, like a shell prompt
++ label {
+    top = 27%
+    left = 7%
+    width = 40%
+    height = 64
+    text = "❯ boot"
+    align = "left"
+    font = "JetBrainsMono NF Bold 48"
+    color = "#f4b942"
+}
++ label {
+    top = 27%+70
+    left = 7%
+    width = 40%
+    height = 32
+    text = "# arch linux · pick an entry"
+    align = "left"
+    font = "JetBrainsMono NF Regular 22"
+    color = "#f4b942"
+}
+
+# the panel with the entries
++ boot_menu {
+    left = 7%
+    width = 34%
+    top = 38%
+    height = 28%
+    menu_pixmap_style = "menu_*.png"
+    selected_item_pixmap_style = "select_*.png"
+    item_font = "JetBrainsMono NF Regular 28"
+    selected_item_font = "JetBrainsMono NF Regular 28"
+    item_color = "#e4d9c8"
+    selected_item_color = "#12141f"
+    item_height = 56
+    item_padding = 22
+    item_spacing = 6
+    icon_width = 0
+    icon_height = 0
+    item_icon_space = 0
+    scrollbar = false
+}
+
+# countdown under the panel
++ label {
+    id = "__timeout__"
+    top = 68%
+    left = 7%
+    width = 40%
+    height = 32
+    text = "autoboot in %ds_"
+    align = "left"
+    font = "JetBrainsMono NF Regular 22"
+    color = "#f6ead8"
+}
+
+# key hints at the bottom
++ label {
+    top = 100%-70
+    left = 7%
+    width = 86%
+    height = 32
+    text = "[↑↓] select   [enter] boot   [e] edit   [c] shell"
+    align = "left"
+    font = "JetBrainsMono NF Regular 22"
+    color = "#f4b942"
+}

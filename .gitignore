@@ -1,3 +1,4 @@
 *.bak
 *.bak.*
 .dotfiles-backup/
+system/grub/golden/background.jpg

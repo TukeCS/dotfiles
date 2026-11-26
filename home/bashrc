@@ -7,12 +7,12 @@
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-# prompt: user (moss) @host (grey) dir (blue) ›   the › turns red after a failed command.
-# Uses terminal colour numbers, so it follows the Ghostty palette.
-PS1='\[\e[32m\]\u\[\e[90m\]@\h \[\e[94m\]\w\[\e[0m\] \[\e[$(( $? ? 31 : 32 ))m\]›\[\e[0m\] '
+# prompt: user (rust, bold) @host (dim) dir (gold) ›   the › is amber, red after a failed command.
+# Rust orange is a true colour; the rest are terminal colour numbers that follow the Ghostty palette.
+PS1='\[\e[1;38;2;232;115;42m\]\u\[\e[0;90m\]@\h \[\e[93m\]\w\[\e[0m\] \[\e[$(( $? ? 31 : 33 ))m\]›\[\e[0m\] '
 
-# man pages in colour (headings green, highlighted words blue)
-export MANPAGER="less -R --use-color -Dd+g -Du+b"
+# man pages in colour (headings orange/yellow, highlighted words blue)
+export MANPAGER="less -R --use-color -Dd+y -Du+b"
 export MANROFFOPT="-P -c"
 # fastfetch that fits the terminal: full layout, compact layout, or compact with no logo
 _ff_cols() { local s; s=$(stty size 2>/dev/null) && echo "${s#* }" || echo 120; }

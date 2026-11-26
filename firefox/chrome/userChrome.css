@@ -1,21 +1,21 @@
 /* ---- Theme matching Hyprland / waybar / rofi / mako / ghostty ----
-   bg #000  fg #e6e6e6  muted #777  outline #666  accent moss #a8bf4a / #3b4520  square corners.
-   Same rules as the rest of the desktop: fields have a dim outline that turns moss on focus,
-   popups get a moss border, the active tab is underlined in moss like the active workspace. */
+   "glow terminal": ink #14110e, cream #f6ead8, gold accent #f4b942 with a soft glow, lake-blue highlight #5c4415, 3-4px corners, monospace.
+   Same rules as the rest of the desktop: fields have a dim outline that turns gold on focus,
+   popups get a gold border, the active tab is underlined in gold like the active workspace. */
 
 :root {
-  --mono-bg: #000000;
-  --mono-bg-2: #0d0d0d;
-  --mono-bg-3: #1a1a1a;
-  --mono-border: #2e2e2e;
-  --mono-fg: #e6e6e6;
-  --mono-muted: #777777;
-  --mono-accent: #a8bf4a;
-  --mono-accent-dim: #3b4520;
-  --mono-outline: #666666;
-  --mono-red: #e06c5f;
-  --mono-amber: #e2b86b;
-  --mono-sky: #89c4e1;
+  --mono-bg: #14110e;
+  --mono-bg-2: #18140f;
+  --mono-bg-3: #211c17;
+  --mono-border: #3a3027;
+  --mono-fg: #f6ead8;
+  --mono-muted: #b9ad9c;
+  --mono-accent: #f4b942;
+  --mono-accent-dim: #5c4415;
+  --mono-outline: #5a4d40;
+  --mono-red: #e5534b;
+  --mono-amber: #f29a38;
+  --mono-sky: #f7cf72;
 
   --lwt-accent-color: var(--mono-bg) !important;
   --lwt-inactive-accent-color: var(--mono-bg) !important;
@@ -28,15 +28,15 @@
   --toolbar-field-background-color: var(--mono-bg-2) !important;
   --toolbar-field-focus-background-color: var(--mono-bg) !important;
   --toolbar-field-color: var(--mono-fg) !important;
-  --toolbar-field-focus-color: #ffffff !important;
+  --toolbar-field-focus-color: #fffaf0 !important;
   --toolbar-field-border-color: var(--mono-outline) !important;
   --toolbar-field-focus-border-color: var(--mono-accent) !important;
   --toolbarbutton-hover-background: var(--mono-bg-3) !important;
   --toolbarbutton-active-background: #262626 !important;
-  --toolbarbutton-border-radius: 0 !important;
-  --tab-border-radius: 0 !important;
+  --toolbarbutton-border-radius: 4px !important;
+  --tab-border-radius: 4px !important;
   --tab-selected-bgcolor: var(--mono-bg-3) !important;
-  --tab-selected-textcolor: #ffffff !important;
+  --tab-selected-textcolor: #fffaf0 !important;
   --tab-hover-background-color: var(--mono-bg-2) !important;
   --tab-loading-fill: var(--mono-accent) !important;
   --tabpanel-background-color: var(--mono-bg) !important;
@@ -44,12 +44,12 @@
   --urlbar-box-bgcolor: var(--mono-bg-2) !important;
   --urlbar-box-hover-bgcolor: var(--mono-bg-3) !important;
   --urlbarView-highlight-background: var(--mono-accent-dim) !important;
-  --urlbarView-highlight-color: #ffffff !important;
+  --urlbarView-highlight-color: #fffaf0 !important;
   --urlbarView-separator-color: var(--mono-border) !important;
   --arrowpanel-background: var(--mono-bg) !important;
   --arrowpanel-color: var(--mono-fg) !important;
   --arrowpanel-border-color: var(--mono-accent) !important;
-  --arrowpanel-border-radius: 0 !important;
+  --arrowpanel-border-radius: 4px !important;
   --panel-separator-color: var(--mono-border) !important;
   --panel-item-hover-bgcolor: var(--mono-bg-3) !important;
   --panel-item-active-bgcolor: #262626 !important;
@@ -62,16 +62,16 @@
   --sidebar-border-color: var(--mono-border) !important;
   --focus-outline-color: var(--mono-accent) !important;
   --button-primary-bgcolor: var(--mono-accent) !important;
-  --button-primary-color: #000000 !important;
-  --border-radius-small: 0 !important;
-  --border-radius-medium: 0 !important;
-  --border-radius-large: 0 !important;
+  --button-primary-color: #14110e !important;
+  --border-radius-small: 4px !important;
+  --border-radius-medium: 4px !important;
+  --border-radius-large: 4px !important;
   --border-radius-circle: 0 !important;
-  --toolbar-field-border-radius: 0 !important;
-  --urlbar-container-border-radius: 0 !important;
-  --urlbar-icon-border-radius: 0 !important;
-  --identity-box-border-radius: 0 !important;
-  --tab-border-radius: 0 !important;
+  --toolbar-field-border-radius: 4px !important;
+  --urlbar-container-border-radius: 4px !important;
+  --urlbar-icon-border-radius: 4px !important;
+  --identity-box-border-radius: 4px !important;
+  --tab-border-radius: 4px !important;
   accent-color: var(--mono-accent) !important;
 }
 
@@ -91,28 +91,28 @@
 #navigator-toolbox { border-bottom: 1px solid var(--mono-border) !important; }
 #nav-bar { border-top: none !important; }
 
-/* tabs: square, selected tab underlined in moss (like the active workspace in waybar) */
+/* tabs: square, selected tab underlined in gold (like the active workspace in waybar) */
 .tab-background {
-  border-radius: 0 !important;
+  border-radius: 3px !important;
   margin-block: 0 !important;
   box-shadow: none !important;
   outline: none !important;
 }
 .tabbrowser-tab { color: var(--mono-muted) !important; }
 .tabbrowser-tab:hover { color: var(--mono-fg) !important; }
-.tabbrowser-tab[selected] { color: #ffffff !important; }
+.tabbrowser-tab[selected] { color: #fffaf0 !important; }
 .tabbrowser-tab[selected] .tab-background {
   background: var(--mono-bg-3) !important;
-  box-shadow: inset 0 -2px 0 var(--mono-accent) !important; /* moss underline */
+  box-shadow: inset 0 -2px 0 var(--mono-accent) !important; /* gold underline */
 }
-.tabbrowser-tab[selected] .tab-close-button { color: #ffffff !important; }
+.tabbrowser-tab[selected] .tab-close-button { color: #fffaf0 !important; }
 .tabbrowser-tab[attention] .tab-background { box-shadow: inset 0 -2px 0 var(--mono-amber) !important; }
 .tabbrowser-tab[soundplaying] .tab-audio-button { color: var(--mono-sky) !important; }
 .tab-throbber[busy]::before, .tab-throbber[progress]::before { fill: var(--mono-accent) !important; }
 
 /* url bar */
 #urlbar-background, #searchbar {
-  border-radius: 0 !important;
+  border-radius: 3px !important;
   background-color: var(--mono-bg-2) !important;
   border: 1px solid var(--mono-outline) !important;
   box-shadow: none !important;
@@ -124,17 +124,17 @@
 }
 #urlbar[open] > #urlbar-background { border-color: var(--mono-accent) !important; }
 .urlbarView-row[selected] > .urlbarView-row-inner,
-.urlbarView-row:hover > .urlbarView-row-inner { border-radius: 0 !important; }
+.urlbarView-row:hover > .urlbarView-row-inner { border-radius: 3px !important; }
 #identity-box > *, #tracking-protection-icon-container, .urlbar-page-action, #urlbar-go-button,
 #urlbar, #urlbar > *, .urlbar-input-container, #urlbar-searchmode-switcher,
 #identity-icon-box, #identity-permission-box, .searchmode-switcher, #searchbar > * {
-  border-radius: 0 !important;
+  border-radius: 3px !important;
 }
-::selection { background-color: var(--mono-accent-dim) !important; color: #ffffff !important; }
+::selection { background-color: var(--mono-accent) !important; color: #14110e !important; }
 
 /* buttons */
 toolbarbutton, .toolbarbutton-icon, .toolbarbutton-badge-stack, .toolbarbutton-text {
-  border-radius: 0 !important;
+  border-radius: 3px !important;
 }
 
 /* menus & panels */
@@ -142,17 +142,17 @@ menupopup, panel, .panel-arrowcontent, panelview, .menupopup-arrowscrollbox {
   --panel-background: var(--mono-bg) !important;
   --panel-color: var(--mono-fg) !important;
   --panel-border-color: var(--mono-accent) !important;
-  --panel-border-radius: 0 !important;
+  --panel-border-radius: 4px !important;
   --panel-shadow-margin: 0px !important;
   --panel-shadow: none !important;
-  border-radius: 0 !important;
+  border-radius: 3px !important;
 }
 menupopup menuitem, menupopup menu, .subviewbutton, .panel-subview-body > * {
-  border-radius: 0 !important;
+  border-radius: 3px !important;
 }
 menupopup menuitem[_moz-menuactive], menupopup menu[_moz-menuactive] {
   background-color: var(--mono-bg-3) !important;
-  color: #ffffff !important;
+  color: #fffaf0 !important;
 }
 
 /* sidebar */
@@ -169,6 +169,17 @@ menupopup menuitem[_moz-menuactive], menupopup menu[_moz-menuactive] {
 
 /* find bar */
 findbar { background: var(--mono-bg) !important; color: var(--mono-fg) !important; border-top: 1px solid var(--mono-border) !important; }
-findbar .findbar-textbox { border-radius: 0 !important; border: 1px solid var(--mono-outline) !important; background: var(--mono-bg-2) !important; }
+findbar .findbar-textbox { border-radius: 3px !important; border: 1px solid var(--mono-outline) !important; background: var(--mono-bg-2) !important; }
 findbar .findbar-textbox:focus { border-color: var(--mono-accent) !important; }
 findbar .findbar-textbox[status="notfound"] { border-color: var(--mono-red) !important; }
+
+/* ---- glow: same soft gold glow as the focused window in Hyprland ---- */
+#urlbar[focused] > #urlbar-background,
+#searchbar:focus-within {
+  box-shadow: 0 0 0 1px var(--mono-accent), 0 0 14px rgba(244, 185, 66, 0.35) !important;
+}
+.tabbrowser-tab[selected] .tab-background {
+  box-shadow: inset 0 -2px 0 var(--mono-accent), 0 0 12px rgba(244, 185, 66, 0.18) !important;
+}
+panel, menupopup { --panel-shadow: 0 4px 20px rgba(244, 185, 66, 0.22) !important; }
+.urlbarView-row[selected] > .urlbarView-row-inner { box-shadow: inset 2px 0 0 var(--mono-accent) !important; }

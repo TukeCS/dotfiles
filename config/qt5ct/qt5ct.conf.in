@@ -1,5 +1,5 @@
 [Appearance]
-color_scheme_path=@HOME@/.config/qt5ct/colors/monochrome.conf
+color_scheme_path=@HOME@/.config/qt5ct/colors/oxide.conf
 custom_palette=true
 icon_theme=breeze-dark
 standard_dialogs=default

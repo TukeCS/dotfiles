@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Dotfiles installer: Ly + Hyprland + Waybar + rofi + ghostty + fastfetch + Firefox, black/white with moss green.
+# Dotfiles installer: Ly + Hyprland + Waybar + rofi + ghostty + fastfetch + Firefox, golden hour glass.
 #   ./install.sh            install packages + link configs
 #   ./install.sh --no-pkgs  only link configs
 set -euo pipefail
 
 DOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP="$HOME/.dotfiles-backup/$(date +%Y-%m-%d_%H-%M-%S)"
-say()  { printf '\033[1;38;2;168;191;74m==>\033[0m %s\n' "$*"; }
+say()  { printf '\033[1;38;2;244;185;66m==>\033[0m %s\n' "$*"; }
 warn() { printf '\033[1;33m!!\033[0m %s\n' "$*"; }
 
 PKGS=(
@@ -16,7 +16,7 @@ PKGS=(
   pulsemixer bluetui networkmanager btop less
   dolphin qt5ct qt6ct qt6-wayland breeze breeze-icons
   ttf-jetbrains-mono-nerd python ffmpeg
-  firefox ly neovim
+  firefox ly neovim mpv
 )
 
 install_pkgs() {
@@ -25,6 +25,10 @@ install_pkgs() {
   if ! command -v asusctl >/dev/null; then
     warn "asusctl not found: the fan-profile module in Waybar needs it (ASUS laptops only)."
     warn "supergfxctl (AUR) is optional: the GPU module stays hidden without it."
+  fi
+  if ! command -v mpvpaper >/dev/null; then
+    if command -v yay >/dev/null; then yay -S --needed mpvpaper
+    else warn "mpvpaper (AUR) is needed for the animated wallpaper; without it hyprpaper shows current.png."; fi
   fi
 }
 
@@ -51,7 +55,8 @@ link_configs() {
   done < <(find "$DOT/config" -type f -print0)
 
   link "$DOT/local/bin/screenshot" "$HOME/.local/bin/screenshot"
-  link "$DOT/local/share/color-schemes/Monochrome.colors" "$HOME/.local/share/color-schemes/Monochrome.colors"
+  link "$DOT/local/bin/livewall" "$HOME/.local/bin/livewall"
+  link "$DOT/local/share/color-schemes/Oxide.colors" "$HOME/.local/share/color-schemes/Oxide.colors"
   link "$DOT/home/bashrc" "$HOME/.bashrc"
   link "$DOT/home/bash_profile" "$HOME/.bash_profile"
 
@@ -77,13 +82,14 @@ link_configs() {
     echo "  wrote ~/.config/$q/$q.conf"
   done
 
-  chmod +x "$DOT/local/bin/screenshot" "$DOT"/config/waybar/scripts/*.sh
+  chmod +x "$DOT/local/bin/screenshot" "$DOT/local/bin/livewall" "$DOT"/config/waybar/scripts/*.sh
 }
 
 # Ly (login screen) reads /etc/ly as root, so its files are copied there instead of linked.
 # The background is generated from the wallpaper; rerun ./install.sh --no-pkgs after changing it.
 install_ly() {
-  local tmp f changed=0 wall="$HOME/Pictures/Wallpapers/wallpaper.jpg"
+  local tmp f changed=0 wall="$HOME/Pictures/Wallpapers/current.png"
+  [ -f "$wall" ] || wall="$HOME/Pictures/Wallpapers/wallpaper.jpg"
   tmp="$(mktemp -d)"
   cp "$DOT/system/ly/config.ini" "$DOT/system/ly/startup.sh" "$tmp/"
   if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
