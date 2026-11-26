@@ -8,23 +8,25 @@ set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 theme=/boot/grub/themes/glass
 
-rm -rf "$theme"
-install -d "$theme"
-install -m 644 "$here"/glass/* "$theme"/
-
-# background.png = your current wallpaper as ASCII art with the card baked in (make-glass.py).
-# Not kept in the repo; rerun this after changing the wallpaper.
-home=$(getent passwd "${SUDO_USER:-root}" | cut -d: -f6)
-wall="$home/Pictures/Wallpapers/current.png"
-if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
-  python3 "$here/make-glass.py" "$theme" "$wall"
-else
-  echo "no wallpaper at $wall: plain background"
-  python3 "$here/make-glass.py" "$theme"
-fi
-
 [ -f /etc/default/grub.bak ] || cp /etc/default/grub /etc/default/grub.bak   # keep the original once
 install -m 644 "$here/grub" /etc/default/grub
 
+# A first, quick pass before grub-mkconfig: it only writes the theme lines if theme.txt exists,
+# only adds `insmod png` if the folder has PNGs, and adds a loadfont line for every .pf2.
+rm -rf "$theme"
+install -d "$theme"
+install -m 644 "$here"/glass/*.pf2 "$theme"/
+python3 "$here/make-glass.py" "$theme" >/dev/null
 grub-mkconfig -o /boot/grub/grub.cfg
+
+# then the theme itself, sized for the menu grub-mkconfig just wrote, over your current
+# wallpaper drawn as ASCII art. Rerun this after changing the wallpaper or adding an OS.
+home=$(getent passwd "${SUDO_USER:-root}" | cut -d: -f6)
+wall="$home/Pictures/Wallpapers/current.png"
+if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
+  python3 "$here/make-glass.py" "$theme" --grubcfg /boot/grub/grub.cfg --wallpaper "$wall"
+else
+  echo "no wallpaper at $wall: plain background"
+  python3 "$here/make-glass.py" "$theme" --grubcfg /boot/grub/grub.cfg
+fi
 echo "done. original config saved as /etc/default/grub.bak"
