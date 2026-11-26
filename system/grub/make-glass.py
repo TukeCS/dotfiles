@@ -24,7 +24,7 @@ W, H, G, RAD, BORDER = 1040, 244, 40, 6, 2      # card size, glow margin, corner
 SEP = (76,)                                     # hairline under the header
 CELL_W, CELL_H, FONT_PX = 12, 24, 20            # ASCII grid
 RAMP = " .:-=+*#%@"                             # dark -> bright
-DIM = 0.62                                      # how bright the ASCII wallpaper gets
+DIM = 1.0                                       # how bright the ASCII wallpaper gets
 FONT = "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf"
 
 
@@ -62,6 +62,15 @@ def glyph_masks(tmp):
             for i in range(n)]
 
 
+def halo(c, r, cols, rows):
+    """Brightness factor for an ASCII cell: a soft dark halo around the centred card (down to
+    30%) so the card and the key hints under it stay readable; full brightness at the edges."""
+    dx = ((c + 0.5) * CELL_W - SW / 2) / 900
+    dy = ((r + 0.5) * CELL_H - SH / 2) / 430
+    t = max(0.0, min(1.0, (math.hypot(dx, dy) - 0.6) / 0.7))
+    return 0.3 + 0.7 * t * t * (3 - 2 * t)
+
+
 def ascii_screen(wallpaper):
     """The wallpaper as coloured ASCII art, as SH rows of SW*3 bytes."""
     cols, rows = -(-SW // CELL_W), -(-SH // CELL_H)
@@ -74,18 +83,18 @@ def ascii_screen(wallpaper):
     lums = [(0.2126 * cells[i] + 0.7152 * cells[i + 1] + 0.0722 * cells[i + 2]) / 255
             for i in range(0, len(cells), 3)]
     ranked = sorted(lums)                              # stretch to the wallpaper's own range
-    lo, hi = ranked[len(ranked) * 5 // 100], ranked[len(ranked) * 99 // 100]
+    lo, hi = ranked[len(ranked) * 2 // 100], ranked[len(ranked) * 99 // 100]
     for r in range(rows):
         for c in range(cols):
             p = cells[(r * cols + c) * 3:(r * cols + c) * 3 + 3]
             lum = max(0.0, min(1.0, (lums[r * cols + c] - lo) / ((hi - lo) or 1)))
-            k = min(len(RAMP) - 1, int(lum ** 0.9 * len(RAMP)))
+            k = min(len(RAMP) - 1, int(lum ** 0.7 * len(RAMP)))
             if k == 0:
                 continue
             # the cell's own colour, brought up to a common brightness then dimmed, so dark
             # areas still read as their hue and bright ones don't shout
             m = max(p) or 1
-            col = [min(255, v / m * 255 * (0.35 + 0.65 * lum)) * DIM for v in p]
+            col = [min(255, v / m * 255 * (0.55 + 0.45 * lum)) * DIM * halo(c, r, cols, rows) for v in p]
             mask = masks[k]
             for y in range(CELL_H):
                 sy = r * CELL_H + y
