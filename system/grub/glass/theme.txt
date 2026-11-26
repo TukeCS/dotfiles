@@ -1,8 +1,9 @@
-# GRUB theme "glass": looks like a focused window on the desktop. A centred warm-black
-# card with the same gold->orange 2px border and soft gold glow as Hyprland's active
-# window, a header row like a Waybar island, the selected entry styled like the active
-# Waybar workspace (gold tint + gold underline), JetBrains Mono, cream text.
-# Everything is positioned from the screen centre. Card: 1040x330, drawn by ../make-glass.py.
+# GRUB theme "glass": looks like a focused window on the desktop, over the wallpaper drawn as
+# ASCII art. A centred warm-black card with Hyprland's active-window border (rust->gold) and
+# rust glow, a header row like a Waybar island, the selected entry styled like the active
+# Waybar workspace (rust tint + rust underline), the countdown top-right like the Waybar clock, JetBrains Mono.
+# Rust is the main colour, gold the secondary. Card 1040x244 at the screen centre, drawn
+# (with the ASCII wallpaper) into background.png by ../make-glass.py; positions match it.
 
 title-text: ""
 desktop-color: "#0b0a09"
@@ -17,37 +18,39 @@ terminal-font: "JetBrainsMono NFM Regular 22"
 terminal-box: "term_*.png"
 
 
-# header, like a Waybar island: Arch logo + host on the left, GRUB version on the right
+# header, like a Waybar island: Arch logo + host on the left, the countdown on the right
+# (where Waybar has the clock; it disappears once a key is pressed)
 + label {
     left = 50%-488
-    top = 50%-143
+    top = 50%-100
     width = 976
     height = 32
     text = "  tux"
     font = "JetBrainsMono NFM Bold 22"
-    color = "#f4b942"
+    color = "#e8732a"
 }
 + label {
     left = 50%-488
-    top = 50%-143
+    top = 50%-100
     width = 976
     height = 32
     align = "right"
-    text = "grub 2.16"
+    id = "__timeout__"
+    text = "%ds"
     font = "JetBrainsMono NFM Regular 22"
-    color = "#8a7d70"
+    color = "#f4b942"
 }
 
-# entries
+# entries (GRUB draws the first item 20px below `top`)
 + boot_menu {
     left = 50%-500
-    top = 50%-93   # GRUB draws the first item 20px below this; 16px clear of both hairlines
+    top = 50%-50
     width = 1000
     height = 128
     item_font = "JetBrainsMono NFM Regular 26"
     selected_item_font = "JetBrainsMono NFM Bold 26"
     item_color = "#b8a998"
-    selected_item_color = "#f4b942"
+    selected_item_color = "#e8732a"
     selected_item_pixmap_style = "select_*.png"
     item_height = 60
     item_padding = 20
@@ -58,26 +61,14 @@ terminal-box: "term_*.png"
     scrollbar = false
 }
 
-# countdown, like the shell prompt (one label, so it all disappears when a key stops the timer)
-+ label {
-    id = "__timeout__"
-    left = 50%-488
-    top = 50%+97
-    width = 900
-    height = 32
-    text = "❯ booting in %ds"
-    font = "JetBrainsMono NFM Regular 22"
-    color = "#f4b942"
-}
-
 # key hints under the card
 + label {
     left = 0
-    top = 50%+225
+    top = 50%+182
     width = 100%
     height = 32
     align = "center"
     text = "↑↓ select    enter boot    e edit    c shell"
     font = "JetBrainsMono NFM Regular 22"
-    color = "#6f6458"
+    color = "#8a7d70"
 }

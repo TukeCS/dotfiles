@@ -12,6 +12,17 @@ rm -rf "$theme"
 install -d "$theme"
 install -m 644 "$here"/glass/* "$theme"/
 
+# background.png = your current wallpaper as ASCII art with the card baked in (make-glass.py).
+# Not kept in the repo; rerun this after changing the wallpaper.
+home=$(getent passwd "${SUDO_USER:-root}" | cut -d: -f6)
+wall="$home/Pictures/Wallpapers/current.png"
+if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
+  python3 "$here/make-glass.py" "$theme" "$wall"
+else
+  echo "no wallpaper at $wall: plain background"
+  python3 "$here/make-glass.py" "$theme"
+fi
+
 [ -f /etc/default/grub.bak ] || cp /etc/default/grub /etc/default/grub.bak   # keep the original once
 install -m 644 "$here/grub" /etc/default/grub
 
