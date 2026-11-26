@@ -2,23 +2,20 @@
 # card with the same gold->orange 2px border and soft gold glow as Hyprland's active
 # window, a header row like a Waybar island, the selected entry styled like the active
 # Waybar workspace (gold tint + gold underline), JetBrains Mono, cream text.
-# Everything is positioned from the screen centre. Card: 1040x330 (card.png adds 40px of glow).
+# Everything is positioned from the screen centre. Card: 1040x330, drawn by ../make-glass.py.
 
 title-text: ""
 desktop-color: "#0b0a09"
+# background.png is the whole screen (2560x1600, GRUB_GFXMODE) with the card baked in at the
+# centre. It has to be the background: GRUB draws `image` components over the menu.
+desktop-image: "background.png"
+desktop-image-scale-method: "stretch"
 message-font: "JetBrainsMono NFM Regular 22"
 message-color: "#ecdfcc"
 message-bg-color: "#0b0a09"
 terminal-font: "JetBrainsMono NFM Regular 22"
 terminal-box: "term_*.png"
 
-+ image {
-    left = 50%-560
-    top = 50%-205
-    width = 1120
-    height = 410
-    file = "card.png"
-}
 
 # header, like a Waybar island: Arch logo + host on the left, GRUB version on the right
 + label {
@@ -44,7 +41,7 @@ terminal-box: "term_*.png"
 # entries
 + boot_menu {
     left = 50%-500
-    top = 50%-69
+    top = 50%-93   # GRUB draws the first item 20px below this; 16px clear of both hairlines
     width = 1000
     height = 128
     item_font = "JetBrainsMono NFM Regular 26"
@@ -61,25 +58,16 @@ terminal-box: "term_*.png"
     scrollbar = false
 }
 
-# countdown, like the shell prompt
-+ label {
-    left = 50%-488
-    top = 50%+97
-    width = 40
-    height = 32
-    text = "❯"
-    font = "JetBrainsMono NFM Bold 22"
-    color = "#f4b942"
-}
+# countdown, like the shell prompt (one label, so it all disappears when a key stops the timer)
 + label {
     id = "__timeout__"
-    left = 50%-456
+    left = 50%-488
     top = 50%+97
     width = 900
     height = 32
-    text = "booting in %ds"
+    text = "❯ booting in %ds"
     font = "JetBrainsMono NFM Regular 22"
-    color = "#ecdfcc"
+    color = "#f4b942"
 }
 
 # key hints under the card
