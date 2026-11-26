@@ -1,5 +1,5 @@
 /* ---- Theme matching Hyprland / waybar / rofi / mako / ghostty ----
-   "glow terminal": ink #14110e, cream #f6ead8, gold accent #f4b942 with a soft glow, lake-blue highlight #5c4415, 3-4px corners, monospace.
+   "glow terminal": ink #14110e, cream #f6ead8, rust accent #e8732a (gold secondary) with a soft glow, lake-blue highlight #5c4415, 3-4px corners, monospace.
    Same rules as the rest of the desktop: fields have a dim outline that turns gold on focus,
    popups get a gold border, the active tab is underlined in gold like the active workspace. */
 
@@ -10,7 +10,7 @@
   --mono-border: #3a3027;
   --mono-fg: #f6ead8;
   --mono-muted: #b9ad9c;
-  --mono-accent: #f4b942;
+  --mono-accent: #e8732a;
   --mono-accent-dim: #5c4415;
   --mono-outline: #5a4d40;
   --mono-red: #e5534b;
@@ -176,10 +176,10 @@ findbar .findbar-textbox[status="notfound"] { border-color: var(--mono-red) !imp
 /* ---- glow: same soft gold glow as the focused window in Hyprland ---- */
 #urlbar[focused] > #urlbar-background,
 #searchbar:focus-within {
-  box-shadow: 0 0 0 1px var(--mono-accent), 0 0 14px rgba(244, 185, 66, 0.35) !important;
+  box-shadow: 0 0 0 1px var(--mono-accent), 0 0 14px rgba(232,115,42, 0.35) !important;
 }
 .tabbrowser-tab[selected] .tab-background {
-  box-shadow: inset 0 -2px 0 var(--mono-accent), 0 0 12px rgba(244, 185, 66, 0.18) !important;
+  box-shadow: inset 0 -2px 0 var(--mono-accent), 0 0 12px rgba(232,115,42, 0.18) !important;
 }
-panel, menupopup { --panel-shadow: 0 4px 20px rgba(244, 185, 66, 0.22) !important; }
+panel, menupopup { --panel-shadow: 0 4px 20px rgba(232,115,42, 0.22) !important; }
 .urlbarView-row[selected] > .urlbarView-row-inner { box-shadow: inset 2px 0 0 var(--mono-accent) !important; }

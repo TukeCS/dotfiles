@@ -10,11 +10,12 @@ configuration {
 }
 
 /* "glow terminal": frosted panel (blurred by Hyprland), near-square, monospace, a "run:"
-   prompt; the selected entry is a solid gold bar with dark text so it is always obvious. */
+   prompt; the selected entry is a solid rust bar with dark text so it is always obvious. */
 * {
   fg:     #f6ead8;
   dim:    #c9bfb0;
   faint:  #8f8676;
+  rust:   #e8732a;
   gold:   #f4b942;
   amber:  #f29a38;
   blue:   #9db8e8;
@@ -37,12 +38,12 @@ mainbox  { padding: 16px; spacing: 14px; children: [ inputbar, message, listview
 
 inputbar { children: [ prompt, entry ]; spacing: 10px; padding: 10px 16px;
            background-color: #f6ead80f; border-radius: 3px;
-           border: 0 0 1px 0; border-color: #f4b94266; }
-prompt   { text-color: @gold; }
-entry    { placeholder: "_"; placeholder-color: @faint; cursor: text; cursor-color: @gold; }
+           border: 0 0 1px 0; border-color: #e8732a66; }
+prompt   { text-color: @rust; }
+entry    { placeholder: "_"; placeholder-color: @faint; cursor: text; cursor-color: @rust; }
 
 message  { border: 0; padding: 0 4px; }
-textbox  { text-color: @amber; }
+textbox  { text-color: @gold; }
 mode-switcher, button { border: 0; text-color: @dim; }
 
 listview { lines: 8; fixed-height: false; scrollbar: false; spacing: 4px; border: 0; }
@@ -57,6 +58,6 @@ element normal.normal, element alternate.normal { background-color: transparent;
 element normal.active, element alternate.active { background-color: transparent; text-color: @blue; }
 element normal.urgent, element alternate.urgent { background-color: transparent; text-color: @red; }
 
-element selected.normal { background-color: @gold;  text-color: @dark; }
+element selected.normal { background-color: @rust;  text-color: @dark; }
 element selected.active { background-color: @blue;  text-color: @dark; }
 element selected.urgent { background-color: @red;   text-color: @dark; }

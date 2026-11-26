@@ -3,7 +3,7 @@
 font=JetBrainsMono Nerd Font 10.5
 background-color=#0e0d0cb3
 text-color=#f6ead8
-border-color=#f4b94266
+border-color=#e8732a66
 progress-color=over #2f4475
 border-size=1
 border-radius=4
@@ -15,7 +15,7 @@ default-timeout=5000
 icons=1
 max-icon-size=40
 # app name dim like the box labels, summary bold, body below
-format=<span foreground="#f4b942">%a</span>\n<b>%s</b>\n%b
+format=<span foreground="#e8732a">%a</span>\n<b>%s</b>\n%b
 
 [app-name=""]
 format=<b>%s</b>\n%b

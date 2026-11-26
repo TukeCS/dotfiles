@@ -109,9 +109,9 @@ hl.config({
 
         border_size = 2,
 
-        -- focused window: gold fading into deep orange; others: a faint warm edge
+        -- focused window: rust fading into gold; others: a faint warm edge
         col = {
-            active_border   = { colors = {"rgba(f4b942ee)", "rgba(e3762bee)"}, angle = 135 },
+            active_border   = { colors = {"rgba(e8732aee)", "rgba(f4b942ee)"}, angle = 135 },
             inactive_border = "rgba(f6ead826)",
         },
 
@@ -132,13 +132,13 @@ hl.config({
         active_opacity   = 1.0,
         inactive_opacity = 0.88,
 
-        -- soft glow: warm gold around the focused window, plain soft shadow on the rest
+        -- soft glow: warm rust around the focused window, plain soft shadow on the rest
         shadow = {
             enabled        = true,
             range          = 22,
             render_power   = 3,
             offset         = {0, 4},
-            color          = "rgba(f4b94240)",
+            color          = "rgba(e8732a40)",
             color_inactive = "rgba(00000059)",
         },
 
@@ -159,7 +159,7 @@ hl.config({
     -- grouped (tabbed) windows: same colours, square tabs with the bar font
     group = {
         col = {
-            border_active          = { colors = {"rgba(f4b942ee)", "rgba(e3762bee)"}, angle = 135 },
+            border_active          = { colors = {"rgba(e8732aee)", "rgba(f4b942ee)"}, angle = 135 },
             border_inactive        = "rgba(f6ead826)",
             border_locked_active   = "rgba(78bfa8ff)",
             border_locked_inactive = "rgba(f6ead826)",
@@ -171,10 +171,10 @@ hl.config({
             rounding       = 2,
             gradients      = true,
             gaps_out       = 3,
-            text_color          = "rgba(0e0d0cff)",   -- on the gold active tab
+            text_color          = "rgba(0e0d0cff)",   -- on the rust active tab
             text_color_inactive = "rgba(b9ad9cff)",   -- on the dark inactive tabs
             col = {
-                active          = "rgba(f4b942ee)",
+                active          = "rgba(e8732aee)",
                 inactive        = "rgba(0e0d0cb3)",
                 locked_active   = "rgba(78bfa8ff)",
                 locked_inactive = "rgba(0e0d0cb3)",
