@@ -18,7 +18,7 @@ window#waybar { background: transparent; color: #f6ead8; }
   border: 1px solid rgba(246, 234, 216, 0.16);
   border-radius: 4px;
   padding: 0 6px;
-  margin: 2px 0 8px 0;
+  margin: 0 0 8px 0;   /* the 8px below is room for the shadow */
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.30);
 }
 

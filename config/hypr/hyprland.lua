@@ -103,7 +103,9 @@ hl.config({
     general = {
         -- "glow terminal": near-square windows with a soft glow
         gaps_in  = 6,
-        gaps_out = 14,
+        -- 12 everywhere: screen edges, between windows (2 x gaps_in), and under Waybar.
+        -- Top is 4 because Waybar already reserves 8 under its islands for their shadow.
+        gaps_out = { top = 4, right = 12, bottom = 12, left = 12 },
 
         border_size = 2,
 
