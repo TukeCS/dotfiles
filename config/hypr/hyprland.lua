@@ -142,11 +142,11 @@ hl.config({
 
         blur = {
             enabled   = true,
-            size      = 8,   -- frosted glass
-            passes    = 3,
+            size      = 5,   -- light frost: the wallpaper still reads through
+            passes    = 2,
             vibrancy  = 0.25,
             noise     = 0.015,
-            brightness = 0.9,
+            brightness = 1.0,
         },
     },
 
@@ -169,13 +169,13 @@ hl.config({
             rounding       = 2,
             gradients      = true,
             gaps_out       = 3,
-            text_color          = "rgba(12141fff)",   -- on the gold active tab
+            text_color          = "rgba(0e0d0cff)",   -- on the gold active tab
             text_color_inactive = "rgba(b9ad9cff)",   -- on the dark inactive tabs
             col = {
                 active          = "rgba(f4b942ee)",
-                inactive        = "rgba(12141fb3)",
+                inactive        = "rgba(0e0d0cb3)",
                 locked_active   = "rgba(78bfa8ff)",
-                locked_inactive = "rgba(12141fb3)",
+                locked_inactive = "rgba(0e0d0cb3)",
             },
         },
     },
@@ -259,7 +259,7 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,     -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = true,
-        background_color        = 0x12141f,  -- ink blue behind the wallpaper
+        background_color        = 0x0e0d0c,  -- warm black behind the wallpaper
     },
 })
 

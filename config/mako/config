@@ -1,7 +1,7 @@
 # "glow terminal": frosted card (blurred by Hyprland), near-square, monospace, thin warm edge,
 # cream text with gold app names, red only for critical.
 font=JetBrainsMono Nerd Font 10.5
-background-color=#12141fb3
+background-color=#0e0d0cb3
 text-color=#f6ead8
 border-color=#f4b94266
 progress-color=over #2f4475

@@ -31,7 +31,8 @@ palette = 15=#fff4e3
 window-padding-x = 10
 window-padding-y = 10
 window-decoration = false
-background-opacity = 0.82
+# same see-through as the Waybar islands
+background-opacity = 0.55
 background-blur = true
 
 # ---- Fast window opening ----

@@ -69,7 +69,7 @@ set_wall() {
             local vw vh; IFS=x read -r vw vh <<<"$(video_size)"
             echo "rendering at ${vw}x${vh} ..."
             ffmpeg -v error -stats -y -i "$src" -an -vf "$(fill_filter "$vw" "$vh" "$pixel")" \
-                -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart "$VIDEO.new"
+                -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart -f mp4 "$VIDEO.new"
             mv -f "$VIDEO.new" "$VIDEO"
             ffmpeg -v error -y -ss 2 -i "$VIDEO" -frames:v 1 -vf "scale=$pw:$ph" "$STILL" ;;
     esac

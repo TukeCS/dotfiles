@@ -1,0 +1,88 @@
+# GRUB theme "ember": autumn forest wallpaper faded to warm black on the left,
+# a quiet text-only menu on top. Fonts: Adwaita Sans (menu), JetBrains Mono (console).
+
+title-text: ""
+desktop-image: "background.jpg"
+desktop-image-scale-method: "crop"
+desktop-color: "#0e0d0c"
+message-font: "Adwaita Sans Regular 20"
+message-color: "#c9c1ba"
+message-bg-color: "#0e0d0c"
+terminal-font: "JetBrainsMono NF Regular 22"
+terminal-box: "term_*.png"
+
+# small ember eyebrow
++ label {
+    left = 160
+    top = 33%
+    width = 800
+    height = 30
+    text = "ARCH LINUX"
+    font = "Adwaita Sans Bold 20"
+    color = "#ff7a2f"
+}
+
+# headline
++ label {
+    left = 160
+    top = 33%+38
+    width = 900
+    height = 84
+    text = "Choose what to boot"
+    font = "Adwaita Sans Regular 64"
+    color = "#f3ede7"
+}
+
+# the entries: plain text, selected one gets the ember bar
++ boot_menu {
+    left = 160
+    top = 33%+160
+    width = 620
+    height = 200
+    item_font = "Adwaita Sans Regular 30"
+    selected_item_font = "Adwaita Sans Regular 30"
+    item_color = "#b3aaa2"
+    selected_item_color = "#ffffff"
+    selected_item_pixmap_style = "select_*.png"
+    item_height = 68
+    item_padding = 28
+    item_spacing = 10
+    icon_width = 0
+    icon_height = 0
+    item_icon_space = 0
+    scrollbar = false
+}
+
+# countdown: a thin ember line that drains, plus a quiet caption
++ progress_bar {
+    id = "__timeout__"
+    left = 160
+    top = 33%+380
+    width = 620
+    height = 3
+    show_text = false
+    fg_color = "#ff7a2f"
+    bg_color = "#2a2522"
+    border_color = "#2a2522"
+}
++ label {
+    id = "__timeout__"
+    left = 160
+    top = 33%+400
+    width = 620
+    height = 30
+    text = "Starting in %d s"
+    font = "Adwaita Sans Regular 20"
+    color = "#9a918a"
+}
+
+# key hints
++ label {
+    left = 160
+    top = 100%-100
+    width = 1400
+    height = 30
+    text = "↑ ↓  choose        enter  boot        e  edit        c  console"
+    font = "Adwaita Sans Regular 20"
+    color = "#9a918a"
+}

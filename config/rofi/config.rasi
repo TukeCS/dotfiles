@@ -19,7 +19,7 @@ configuration {
   amber:  #f29a38;
   blue:   #9db8e8;
   red:    #e5534b;
-  dark:   #12141f;
+  dark:   #0e0d0c;
   background-color: transparent;
   text-color: @fg;
   margin: 0; padding: 0; spacing: 0;
@@ -27,7 +27,7 @@ configuration {
 
 window {
   width: 560px;
-  background-color: #12141fa6;
+  background-color: #0e0d0ca6;
   border: 1px;
   border-color: #f6ead829;
   border-radius: 6px;
