@@ -2,4 +2,4 @@
 *.bak.*
 .dotfiles-backup/
 system/grub/golden/background.jpg
-system/grub/ember/background.jpg
+system/grub/pixel/background.png

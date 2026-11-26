@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
-# Installs the "ember" GRUB theme and /etc/default/grub, then regenerates grub.cfg.
+# Installs the "pixel" GRUB theme and /etc/default/grub, then regenerates grub.cfg.
 # Run:  sudo ~/dotfiles/system/grub/install.sh
 # (The older "golden" theme is still in golden/; point GRUB_THEME in ./grub at it to switch back.)
 set -euo pipefail
 [ "$(id -u)" -eq 0 ] || { echo "run with sudo" >&2; exit 1; }
 here="$(cd "$(dirname "$0")" && pwd)"
-theme=/boot/grub/themes/ember
+theme=/boot/grub/themes/pixel
 
 install -d "$theme"
-install -m 644 "$here"/ember/*.png "$here"/ember/*.pf2 "$here"/ember/theme.txt "$theme"/
+install -m 644 "$here"/pixel/*.png "$here"/pixel/*.pf2 "$here"/pixel/theme.txt "$theme"/
 
-# GRUB background = your current wallpaper (not kept in the repo), with the left side
-# faded to warm black so the menu reads. yuvj420p matters: GRUB's JPEG decoder only
-# handles standard 4:2:0 / 4:4:4 sampling and silently drops the whole theme otherwise.
+# GRUB background = your current wallpaper as pixel art (the same art the Ly login shows,
+# made by ../ly/make-ly-art.py), dimmed to 55% so the menu stays easy on the eyes.
+# Not kept in the repo; rerun this after changing the wallpaper.
 home=$(getent passwd "${SUDO_USER:-root}" | cut -d: -f6)
 wall="$home/Pictures/Wallpapers/current.png"
 if [ -f "$wall" ] && command -v ffmpeg >/dev/null; then
-  f='st(0,clip((X-380)/1300,0,1));st(0,0.12+0.88*ld(0)*ld(0)*(3-2*ld(0)))'
-  ffmpeg -v error -y -i "$wall" -vf "scale=2560:1600:force_original_aspect_ratio=increase,crop=2560:1600,format=gbrp,\
-geq=r='$f;r(X,Y)*ld(0)+14*(1-ld(0))':g='$f;g(X,Y)*ld(0)+12*(1-ld(0))':b='$f;b(X,Y)*ld(0)+10*(1-ld(0))',format=yuvj420p" \
-    -q:v 2 "$theme/background.jpg"
+  tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+  python3 "$here/../ly/make-ly-art.py" "$wall" "$tmp" --png "$tmp/art.png" 2560x1600 >/dev/null
+  ffmpeg -v error -y -i "$tmp/art.png" \
+    -vf "format=gbrp,geq=r='r(X,Y)*0.55':g='g(X,Y)*0.55':b='b(X,Y)*0.55',format=rgb24" "$theme/background.png"
 else
-  echo "no wallpaper at $wall: GRUB gets a plain warm-black background"
+  echo "no wallpaper at $wall: GRUB gets a plain black background"
 fi
 
 [ -f /etc/default/grub.bak ] || cp /etc/default/grub /etc/default/grub.bak   # keep the original once

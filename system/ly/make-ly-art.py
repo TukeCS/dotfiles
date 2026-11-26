@@ -10,7 +10,7 @@ background, so the lock screen matches the login screen).
 
 The Linux console only has 16 colours, so the palette is picked from the
 wallpaper itself. A few slots stay fixed because Ly's UI uses them:
-  0 warm black (background)   2 gold (box border)   7 cream (text)   9 red (errors)
+  0 black (background, also the console on reboot)   2 gold (box border)   7 cream (text)   9 red (errors)
 
 Each character cell shows two pixels with a half block (top = foreground colour,
 bottom = background colour). Background colours can only come from slots 0-7.
@@ -22,7 +22,7 @@ import random
 import subprocess
 import sys
 
-FIXED = {0: (0x0E, 0x0D, 0x0C), 2: (0xF4, 0xB9, 0x42), 7: (0xF6, 0xEA, 0xD8), 9: (0xE5, 0x53, 0x4B)}
+FIXED = {0: (0x00, 0x00, 0x00), 2: (0xF4, 0xB9, 0x42), 7: (0xF6, 0xEA, 0xD8), 9: (0xE5, 0x53, 0x4B)}
 BG_SLOTS = [0, 1, 2, 3, 4, 5, 6, 7]  # bold (bright) only works for the foreground
 
 # Ly maps durdraw 16-colour numbers to console colours with a lookup table; this is its inverse
