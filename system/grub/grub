@@ -21,7 +21,7 @@ GRUB_TIMEOUT_STYLE=menu
 GRUB_GFXMODE=2560x1600x32,auto
 GRUB_GFXPAYLOAD_LINUX=keep
 GRUB_TERMINAL_INPUT=console
-GRUB_THEME="/boot/grub/themes/term/theme.txt"
+GRUB_THEME="/boot/grub/themes/glass/theme.txt"
 
 # Uncomment to detect other operating systems (needs os-prober)
 #GRUB_DISABLE_OS_PROBER=false

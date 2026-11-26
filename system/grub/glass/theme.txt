@@ -1,0 +1,95 @@
+# GRUB theme "glass": looks like a focused window on the desktop. A centred warm-black
+# card with the same gold->orange 2px border and soft gold glow as Hyprland's active
+# window, a header row like a Waybar island, the selected entry styled like the active
+# Waybar workspace (gold tint + gold underline), JetBrains Mono, cream text.
+# Everything is positioned from the screen centre. Card: 1040x330 (card.png adds 40px of glow).
+
+title-text: ""
+desktop-color: "#0b0a09"
+message-font: "JetBrainsMono NFM Regular 22"
+message-color: "#ecdfcc"
+message-bg-color: "#0b0a09"
+terminal-font: "JetBrainsMono NFM Regular 22"
+terminal-box: "term_*.png"
+
++ image {
+    left = 50%-560
+    top = 50%-205
+    width = 1120
+    height = 410
+    file = "card.png"
+}
+
+# header, like a Waybar island: Arch logo + host on the left, GRUB version on the right
++ label {
+    left = 50%-488
+    top = 50%-143
+    width = 976
+    height = 32
+    text = "  tux"
+    font = "JetBrainsMono NFM Bold 22"
+    color = "#f4b942"
+}
++ label {
+    left = 50%-488
+    top = 50%-143
+    width = 976
+    height = 32
+    align = "right"
+    text = "grub 2.16"
+    font = "JetBrainsMono NFM Regular 22"
+    color = "#8a7d70"
+}
+
+# entries
++ boot_menu {
+    left = 50%-500
+    top = 50%-69
+    width = 1000
+    height = 128
+    item_font = "JetBrainsMono NFM Regular 26"
+    selected_item_font = "JetBrainsMono NFM Bold 26"
+    item_color = "#b8a998"
+    selected_item_color = "#f4b942"
+    selected_item_pixmap_style = "select_*.png"
+    item_height = 60
+    item_padding = 20
+    item_spacing = 8
+    icon_width = 0
+    icon_height = 0
+    item_icon_space = 0
+    scrollbar = false
+}
+
+# countdown, like the shell prompt
++ label {
+    left = 50%-488
+    top = 50%+97
+    width = 40
+    height = 32
+    text = "❯"
+    font = "JetBrainsMono NFM Bold 22"
+    color = "#f4b942"
+}
++ label {
+    id = "__timeout__"
+    left = 50%-456
+    top = 50%+97
+    width = 900
+    height = 32
+    text = "booting in %ds"
+    font = "JetBrainsMono NFM Regular 22"
+    color = "#ecdfcc"
+}
+
+# key hints under the card
++ label {
+    left = 0
+    top = 50%+225
+    width = 100%
+    height = 32
+    align = "center"
+    text = "↑↓ select    enter boot    e edit    c shell"
+    font = "JetBrainsMono NFM Regular 22"
+    color = "#6f6458"
+}
